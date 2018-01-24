@@ -6,3 +6,8 @@ These are the notebooks from the Lorena A. Barba course "*12 steps to CFD*" in P
 
 
 ## airfoil-parametrization
+In the way 
+
+$$
+\tau
+$$
