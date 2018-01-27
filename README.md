@@ -11,5 +11,8 @@ In the way of searching a way of correctly parametrize airfoils, different model
 ## mesh-generation
 A python notebook that joins a lot of previously done functions with the purpose of creating the internal mesh (for the moment) of an airfoil selected with a NACA4 code.
 
-##optimization
-First approach to complex systems: neural networks and genetic algorithms - with hopes to use them in the future optimization of the project. 
+## optimization
+First approach to complex systems: neural networks and genetic algorithms - with hopes to use them in the future optimization of the project.
+
+## cylinder-mesh
+A simple blockMesh mesh of a cylinder to make some vortex shedding calculations.
