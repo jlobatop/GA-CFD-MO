@@ -16,3 +16,6 @@ First approach to complex systems: neural networks and genetic algorithms - with
 
 ## cylinder-mesh
 A simple blockMesh mesh of a cylinder to make some vortex shedding calculations.
+
+## cavity-mesh
+A cavity mesh for OpenFOAM, attemp to do some vortex in future simulations.
