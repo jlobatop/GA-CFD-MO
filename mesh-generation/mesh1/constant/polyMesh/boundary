@@ -15,32 +15,14 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-4
+1
 (
-    inlet
-    {
-        type            patch;
-        nFaces          220;
-        startFace       33710;
-    }
-    outlet
-    {
-        type            patch;
-        nFaces          220;
-        startFace       33930;
-    }
-    airfoil
-    {
-        type            patch;
-        nFaces          140;
-        startFace       34150;
-    }
-    frontAndBack
+    defaultFaces
     {
         type            empty;
         inGroups        1(empty);
-        nFaces          34000;
-        startFace       34290;
+        nFaces          5520;
+        startFace       4740;
     }
 )
 
