@@ -18,7 +18,7 @@ First approach to complex systems: neural networks and genetic algorithms - with
 A simple blockMesh mesh of a cylinder to make some vortex shedding calculations.
 
 ## vortex-generation
-Once the basic flow over a cylinder has been simulated, the different values will be processes to avoid the vortex generation (or try to). In order to do that, a ParaView script has been made to export PlotOverLine data from all timesteps in a simulation (processed afterwards to avoid 200 files - i.e. timesteps - for each line and packaging them into two file). Furthermore, the data has been processes with Python, figuring out a way to avoid vortex sheding forming with active flow control.
+Once the basic flow over a cylinder has been simulated, the different values will be processes to avoid the vortex generation (or try to). In order to do that, a ParaView script has been made to export PlotOverLine data from all timesteps in a simulation (processed afterwards to avoid 200 files - i.e. timesteps - for each line and packaging them into two file). Furthermore, the data has been processes with Python, figuring out a way to avoid vortex sheding forming with active flow control. Inside the file there's a method to compute different wave parameters from some data. 
 
 ## cavity-mesh
 A cavity mesh for OpenFOAM, attemp to do some vortex in future simulations.
