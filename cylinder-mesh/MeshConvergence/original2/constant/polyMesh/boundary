@@ -21,8 +21,8 @@ FoamFile
     {
         type            empty;
         inGroups        1(empty);
-        nFaces          28890;
-        startFace       28035;
+        nFaces          14144;
+        startFace       13550;
     }
 )
 
