@@ -19,9 +19,9 @@ A simple blockMesh mesh of a cylinder to make some vortex shedding calculations.
 
 * original: represents the original mesh
 
-* 2original: level 2 of refinement refired to the original mesh (and so do for 3original)
+* 2original: level 2 of refinement referred to the original mesh (and so do for 3original)
 
-* original2: reduces one level of refinement the mesh grid (and so do for original3)
+* original2: reduces one level of refinement the original mesh grid (and so do for original3)
 
 ## vortex-generation
 Once the basic flow over a cylinder has been simulated, the different values will be processes to avoid the vortex generation (or try to). In order to do that, a ParaView script has been made to export PlotOverLine data from all timesteps in a simulation (processed afterwards to avoid 200 files - i.e. timesteps - for each line and packaging them into two file). Furthermore, the data has been processes with Python, figuring out a way to avoid vortex sheding forming with active flow control. Inside the file there's a method to compute different wave parameters from some data. 
