@@ -20,27 +20,27 @@ FoamFile
     inlet
     {
         type            patch;
-        nFaces          320;
-        startFace       43610;
+        nFaces          520;
+        startFace       72990;
     }
     outlet
     {
         type            patch;
-        nFaces          220;
-        startFace       43930;
+        nFaces          480;
+        startFace       73510;
     }
     airfoil
     {
         type            patch;
-        nFaces          240;
-        startFace       44150;
+        nFaces          220;
+        startFace       73990;
     }
     frontAndBack
     {
         type            empty;
         inGroups        1(empty);
-        nFaces          44000;
-        startFace       44390;
+        nFaces          73600;
+        startFace       74210;
     }
 )
 
