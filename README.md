@@ -33,8 +33,12 @@ In the future a dual AFC-patch mesh will be created. It will be symmetric to upp
 A python notebook that joins a lot of previously done functions with the purpose of creating the internal mesh (for the moment) of an airfoil selected with a NACA4 code, including an angle of attack variator. The other notebook develops and external flow mesh from a NACA profile and some other parameters. Also a calculator of boundary layer inflation has been added to increase the utility of the external mesh generator.
 
 
+## openFoam_cases
+Folder to store different OpenFOAM cases useful for the thesis or Python scripts to automate different tasks such as automatic evaluation or post-processing.
+
+
 ## optimization
-First approach to complex systems: neural networks and genetic algorithms. Given that the problem will be developed as a 2D surface, some _ function_optimization _ has been performed. The classical Monte Carlo method and an optimized Monte Carlo method have been coded up to this moment. Some genetical algorithm will be created after basic background is better understanded.
+First approach to complex systems: neural networks and genetic algorithms. Given that the problem will be developed as a 2D surface, some <tt> function_optimization </tt> has been performed. The classical Monte Carlo method and an optimized Monte Carlo method have been coded up to this moment. A genetic algorithm approach has been included in order to compute the solution of a multiobjective optimization problem.
 
 
 ## vortex-generation
