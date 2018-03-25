@@ -34,7 +34,7 @@ A python notebook that joins a lot of previously done functions with the purpose
 
 
 ## openFoam_cases
-Folder to store different OpenFOAM cases useful for the thesis or Python scripts to automate different tasks such as automatic evaluation or post-processing.
+Folder to store different OpenFOAM cases useful for the thesis or Python scripts to automate different tasks such as automatic evaluation or post-processing. Currently working on a Python code that executes different OpenFOAM cases as individuals for different generations. The idea is modify a value in a external folder to the simulate the case and store the results in one folder for each generation and individual, with output written data for errors and plots. Inside the folder there is the base case folder with the classical backwards step flow (<tt>[pitzDaily](https://www.cfdsupport.com/OpenFOAM-Training-by-CFD-Support/openfoam-tutorial-backward-facing-step-pitzDaily-velocity-magnitude.png)</tt>), the run folder (where the main scripts are located and where simulations take place) and the script folder (where tests are performed).
 
 
 ## optimization
