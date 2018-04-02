@@ -47,6 +47,18 @@ runTimeModifiable true;
 
 functions
 {
+	forces
+    {
+        type                forces;
+        libs                ("libforces.so");
+        writeControl        timeStep;
+        writeInterval       1;
+        patches             (lowerWall);
+        rho                 rhoInf;
+        log                 true;
+        rhoInf              1;
+        CofR                (0.5 0.0 0.0);
+    }
 }
 
 // ************************************************************************* //

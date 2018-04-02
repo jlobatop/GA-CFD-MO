@@ -17,7 +17,7 @@ import time
 def print_tqdm(string):
     tqdm.write(string)
 
-#Copy the folder from ./case to ./run when being in ./run
+#Copy the folder from ./case to ./run returning to ./run
 def caseCopy():
     os.chdir("..")
     os.system("cp -r ./baseCase ./run/case")
@@ -28,17 +28,16 @@ def folderTransfer(analysisType,i,j):
     numFolder = []
     nonNumFolder = []
     for cFolder in os.listdir('case'):
-        if cFolder != 'Gnuplotting.analyzed':
-            if analysisType == 'transient':
-                os.system("mv ./case/%s ./generation%i/ind%i/sim/%s" %(cFolder,i,j,cFolder))
-            elif analysisType == 'steady':
-                if str.isnumeric(cFolder):
-                    numFolder.append(int(cFolder))
-                else:
-                    nonNumFolder.append(cFolder)
+        if analysisType == 'transient':
+            os.system("mv ./case/%s ./generation%i/ind%i/sim/%s" %(cFolder,i,j,cFolder))
+        elif analysisType == 'steady':
+            if str.isnumeric(cFolder):
+                numFolder.append(int(cFolder))
             else:
-                print_tqdm('\033[0;33mError in analysisType\033[0m') 
-                break
+                nonNumFolder.append(cFolder)
+        else:
+            print_tqdm('\033[0;33mError in analysisType\033[0m') 
+            break
     if analysisType == 'steady':
         os.system("mv ./case/%i ./generation%i/ind%i/sim/%i" %(min(numFolder),i,j,min(numFolder)))
         os.system("mv ./case/%i ./generation%i/ind%i/sim/%i" %(max(numFolder),i,j,max(numFolder)))
@@ -50,9 +49,9 @@ def folderTransfer(analysisType,i,j):
 ##########################################################################################################
 
 analysisType = 'steady' #'steady' (state) or 'transient' for folder transfer  
-generations = 2
+generations = 2 
 individuals = 2
-values = np.array([[10,20],[30,40]])
+values = np.array([[10,20],[30,40]]) #values that will take VARIABLE1 in U
 
 #Initial linebreak to leave some space
 print_tqdm('\n')
@@ -69,7 +68,7 @@ for i in range(generations):
     #evaluate the function for each individual of the generation
     for j in tqdm(range(individuals),desc="{Generation %2.i}" %i):
 
-        #print the current state in the CLI
+        #print the current individual in the CLI
         print_tqdm('Inidividual %i' %j)
                 
         #if there is not a folder for the current individual, this will create it
@@ -83,30 +82,32 @@ for i in range(generations):
         #copy the preconfigured case
         caseCopy()
         
-        #print the current state in the CLI
-        print_tqdm('    Simulating inidividual %i' %j)
-        
         #change a value in simulations to see change 
         os.system("sed -i 's/VARIABLE1/%i/g' ./case/0/U" %values[i,j])
 
-        #simulation of the case with stderr and stdout saving
+        #print the current state in the CLI
+        print_tqdm('    Simulating inidividual %i' %j)
+
+        #simulation of the case saving both stderr and stdout 
         os.system("simpleFoam -case ./case > 'generation%i/ind%i/g%ii%i.txt' 2> 'generation%i/ind%i/error_g%ii%i.txt'" %(i,j,i,j,i,j,i,j))
 
-        #print the current state in the CLI
+        #transfer the results to the generation/individual folder
         print_tqdm('    Moving inidividual %i' %j)
         folderTransfer(analysisType,i,j)
         
-        #print the current state in the CLI
+        #plot the stdout results into some fancy graphs
         print_tqdm('    Plotting inidividual %i' %j)
         os.system("python ./plotting.py ./generation%i/ind%i/ g%ii%i.txt" %(i,j,i,j))
         
-        # If the error file is empty, this will erase the output of the solver after plotting the results
-        if int(os.popen("du -h 'generation%i/ind%i/error_g%ii%i.txt'" %(i,j,i,j)).read()[0]) == 0: #i.e. error file is empty
+        # If the error file is empty, this will erase the output of the solver, keeping only the plots
+        if int(os.popen("du -h 'generation%i/ind%i/error_g%ii%i.txt'" %(i,j,i,j)).read()[0]) == 0: 
             os.system("rm 'generation%i/ind%i/g%ii%i.txt'" %(i,j,i,j))
+            os.system("rm 'generation%i/ind%i/error_g%ii%i.txt'" %(i,j,i,j))
         # Otherwise print error
         else:
             print_tqdm('\033[0;33mError in simulation. Review logfile\033[0m') 
             
+        #Remove the case folder and begin again
         os.system("rm -r case")
     
     if i+1 != generations:
@@ -119,3 +120,4 @@ for i in range(generations):
         time.sleep(1)
     
 #raise ValueError('\033[1;31mA very specific bad thing happened \033[0m') 
+#let's keep this for the future....
