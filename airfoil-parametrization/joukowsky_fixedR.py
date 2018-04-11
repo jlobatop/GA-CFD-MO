@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('WX') 
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider, Button, RadioButtons
@@ -52,8 +54,8 @@ axx = plt.axes([0.18, 0.15, 0.65, 0.025], facecolor='white')
 axy = plt.axes([0.18, 0.1, 0.65, 0.025], facecolor='white')
 
 sx = Slider(axx, r"$\mu_x$", -1, 1, valinit=x0)
-sy = Slider(axy, r"$\mu_y$", -1, 1, valinit=y0)
-
+sy = Slider(axy, r"$\mu_y$", -1, 1, valinit=y0
+)
 
 def update(val):
 	x_cent = sx.val

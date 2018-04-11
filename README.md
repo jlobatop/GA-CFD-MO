@@ -38,7 +38,7 @@ Folder to store different OpenFOAM cases useful for the thesis or Python scripts
 
 
 ## optimization
-First approach to complex systems: neural networks and genetic algorithms. Given that the problem will be developed as a 2D surface, some <tt> function_optimization </tt> has been performed. The classical Monte Carlo method and an optimized Monte Carlo method have been coded up to this moment. A genetic algorithm approach has been included in order to compute the solution of a multiobjective optimization problem.
+First approach to complex systems: neural networks and genetic algorithms. Given that the problem will be developed as a 2D surface, some <tt> function_optimization </tt> has been performed. The classical Monte Carlo method and an optimized Monte Carlo method have been coded. A genetic algorithm approach has been included in order to compute the solution of a multiobjective optimization problem. To solve the problems that the simple GA created, the well-known NSGA-II (Non-Dominated Sorting Genetic Algorithm) has been coded up. A nicer implementation will be done in the future.
 
 
 ## vortex-generation
