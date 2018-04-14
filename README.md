@@ -28,6 +28,8 @@ In this folder there are also the different active flow control (AFC) meshes dev
 
 In the future a dual AFC-patch mesh will be created. It will be symmetric to upperAFC but with one exit in the upper part and another one in the lower part. 
 
+## diffuser-mesh
+A jet engine diffuser mesh configurable through a Python code.
 
 ## mesh-generation
 A python notebook that joins a lot of previously done functions with the purpose of creating the internal mesh (for the moment) of an airfoil selected with a NACA4 code, including an angle of attack variator. The other notebook develops and external flow mesh from a NACA profile and some other parameters. Also a calculator of boundary layer inflation has been added to increase the utility of the external mesh generator.

@@ -1,0 +1,251 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 1;
+
+nxy1 	-0.70710678;
+xy1 	0.70710678;
+nxy2 	-0.35355339;
+xy2 	0.35355339;
+x1 		-3;
+x2 		15;
+y1 		-5;
+y2 		5;
+z1 		0.0;
+z2 		0.1;
+
+AFCx1   0.49577765688;
+AFCx2   0.9915531376;
+AFCy1   0.06485054986;
+AFCy2   0.1297010997;
+nAFCy1   -0.06485054986;
+nAFCy2   -0.1297010997;
+
+vertices
+(
+	($x1 	$y1		$z1)
+	($nxy1 	$y1		$z1)
+	($xy1 	$y1		$z1)
+	($x2 	$y1		$z1)
+	($x1 	$nxy1	$z1)
+	($nxy1 	$nxy1	$z1)
+	($xy1 	$nxy1	$z1)
+	($x2 	$nxy1	$z1)
+	($nxy2	$nxy2	$z1)
+	($xy2	$nxy2	$z1)
+	($nxy2	$xy2	$z1)
+	($xy2	$xy2	$z1)
+	($x1 	$xy1	$z1)
+	($nxy1 	$xy1	$z1)
+	($xy1 	$xy1	$z1)
+	($x2 	$xy1	$z1)
+	($x1 	$y2		$z1)
+	($nxy1 	$y2		$z1)
+	($xy1 	$y2		$z1)
+	($x2 	$y2		$z1)
+
+	($x1 	$y1		$z2)
+	($nxy1 	$y1		$z2)
+	($xy1 	$y1		$z2)
+	($x2 	$y1		$z2)
+	($x1 	$nxy1	$z2)
+	($nxy1 	$nxy1	$z2)
+	($xy1 	$nxy1	$z2)
+	($x2 	$nxy1	$z2)
+	($nxy2	$nxy2	$z2)
+	($xy2	$nxy2	$z2)
+	($nxy2	$xy2	$z2)
+	($xy2	$xy2	$z2)
+	($x1 	$xy1	$z2)
+	($nxy1 	$xy1	$z2)
+	($xy1 	$xy1	$z2)
+	($x2 	$xy1	$z2)
+	($x1 	$y2		$z2)
+	($nxy1 	$y2		$z2)
+	($xy1 	$y2		$z2)
+	($x2 	$y2		$z2)	
+
+	($AFCx1 $nAFCy1 $z1)
+	($AFCx2 $nAFCy2 $z1)
+	($x2    $nAFCy2 $z1)
+	($x2    $AFCy2  $z1)
+	($AFCx2 $AFCy2  $z1)
+	($AFCx1 $AFCy1  $z1)
+
+	($AFCx1 $nAFCy1 $z2)
+	($AFCx2 $nAFCy2 $z2)
+	($x2    $nAFCy2 $z2)
+	($x2    $AFCy2  $z2)
+	($AFCx2 $AFCy2  $z2)
+	($AFCx1 $AFCy1  $z2)
+);
+
+// Expansion ratios
+exp 10;	
+inv 0.1;
+
+x1  30;
+x2  18;
+x3  162;
+x4  12;
+x5  20;
+
+blocks
+(
+    hex (0 1 5 4 20 21 25 24) 		($x1 $x1 1) 	simpleGrading (1 1 1)				// block 1   
+    hex (1 2 6 5 21 22 26 25) 		($x2 $x1 1) 	simpleGrading (1 1 1)				// block 2   
+    hex (2 3 7 6 22 23 27 26) 		($x3 $x1 1) 	simpleGrading (1 1 1)				// block 3   
+//  hex (6 7 15 14 26 27 35 34)		($x3 $x4 1) 	simpleGrading (1 1 1)			  	// OLD block 4
+    hex (6 7 42 41 26 27 48 47)		($x3 5 1)	 	simpleGrading (1 1 1)		  		// NEW block 4   
+    hex (14 15 19 18 34 35 39 38)	($x3 $x1 1) 	simpleGrading (1 1 1)				// block 5   
+    hex (13 14 18 17 33 34 38 37)	($x2 $x1 1) 	simpleGrading (1 1 1)				// block 6   
+    hex (12 13 17 16 32 33 37 36)	($x1 $x1 1) 	simpleGrading (1 1 1)				// block 7   
+    hex (4 5 13 12 24 25 33 32)		($x1 $x4 1) 	simpleGrading (1 1 1)				// block 8   
+    hex (5 8 10 13 25 28 30 33)		($x5 $x4 1) 	simpleGrading ($inv 1 1)			// block 9   
+    hex (5 6 9 8 25 26 29 28)		($x2 $x5 1) 	simpleGrading (1 $inv 1)			// block 10  
+//  hex (9 6 14 11 29 26 34 31)		($x5 $x4 1) 	simpleGrading ($exp 1 1)			// OLD block 11
+    hex (9 6 41 40 29 26 47 46)		($x5 5 1) 		simpleGrading ($exp 1 1)			// NEW block 11  
+    hex (10 11 14 13 30 31 34 33)	($x2 $x5 1) 	simpleGrading (1 $exp 1)			// block 12  
+
+	hex (41 42 43 44 47 48 49 50)	($x3 2 1)		simpleGrading (1 1 1)    			// block 13  
+	hex (40 41 44 45 46 47 50 51)	($x5 2 1)		simpleGrading ($exp 1 1)			// block 14  
+	hex (44 43 15 14 50 49 35 34)	($x3 5 1)		simpleGrading (1 1 1)				// block 15  
+	hex (45 44 14 11 51 50 34 31)	($x5 5 1)		simpleGrading ($exp 1 1)			// block 16      
+);
+
+arc1 		0.5;
+narc1		-0.5;
+arc2 		1.0;
+narc2		-1.0;
+
+AFCarcx1 	0.4330127019;
+AFCarcx2 	0.8660254028;
+AFCarcy1 	0.25;
+AFCarcy2 	0.50;
+nAFCarcy1 	-0.25;
+nAFCarcy2 	-0.50;
+
+
+edges
+(
+	arc 9 8 (0.0 $narc1 $z1)
+	arc 8 10 ($narc1 0.0 $z1)
+	arc 10 11 (0.0 $arc1 $z1)
+//	arc 11 9 ($arc1 0.0 $z1)
+	arc 11 45 ($AFCarcx1 $AFCarcy1 $z1)
+	arc 40 45 ($arc1 0.0 $z1)
+	arc 40 9  ($AFCarcx1 $nAFCarcy1 $z1)
+
+	arc 29 28 (0.0 $narc1 $z2)
+	arc 28 30 ($narc1 0.0 $z2)
+	arc 30 31 (0.0 $arc1 $z2)
+//	arc 31 29 ($arc1 0.0 $z2)
+	arc 31 51 ($AFCarcx1 $AFCarcy1 $z2)
+	arc 51 46 ($arc1 0.0 $z2)
+	arc 46 29 ($AFCarcx1 $nAFCarcy1 $z2)
+
+	arc 6 5 (0.0 $narc2 $z1)
+	arc 5 13 ($narc2 0.0 $z1)
+	arc 13 14 (0.0 $arc2 $z1)
+//	arc 14 6 ($arc2 0.0 $z1)
+	arc 14 44 ($AFCarcx2 $AFCarcy2 $z1)
+	arc 44 41 ($arc2 0.0 $z1)
+	arc 41 6  ($AFCarcx2 $nAFCarcy2 $z1)
+
+	arc 26 25 (0.0 $narc2 $z2)
+	arc 25 33 ($narc2 0.0 $z2)
+	arc 33 34 (0.0 $arc2 $z2)
+//	arc 34 26 ($arc2 0.0 $z2)
+	arc 34 50 ($AFCarcx2 $AFCarcy2 $z2)
+	arc 50 47 ($arc2 0.0 $z2)
+	arc 47 26 ($AFCarcx2 $nAFCarcy2 $z2)
+);
+
+boundary
+(
+	inlet
+    {
+        type patch;
+        faces
+        (
+            (16 36 32 12)
+            (12 32 24 4)
+            (4 24 20 0)
+        );
+    }   
+
+    outlet
+    {
+        type patch;
+        faces
+        (
+            (39 19 15 35)
+            (27 7 3 23)
+//          (35 15 7 27)
+            (35 15 43 49)
+            (49 43 42 48)
+            (48 42 7 27)
+        );
+    }   
+
+
+    wall
+    {
+        type wall;
+        faces
+        (
+//          (11 31 29 9)
+            (11 31 51 45)
+            (40 46 29 9)
+            (30 10 8 28)
+            (10 30 31 11)
+            (28 8 9 29)
+        );
+    }   
+
+    lower
+    {
+        type symmetry;
+        faces
+        (
+            (0 20 21 1)
+            (1 21 22 2)
+            (2 22 23 3)
+        );
+    }   
+
+    upper
+    {
+        type symmetry;
+        faces
+        (
+            (36 16 17 37)
+            (37 17 18 38)
+			(38 18 19 39)
+        );
+    }
+
+    AFC
+    {
+    	type patch;
+    	faces
+    	(
+            (45 51 46 40)
+    	);
+    }
+);
+
+// ************************************************************************* //
