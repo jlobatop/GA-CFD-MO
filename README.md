@@ -1,5 +1,6 @@
 # senior-thesis
 Senior Thesis in Mechanical Engineering at the University of Vermont. Computer fluid dynamics and optimization contents - along other related stuff that interests me. This will keep track of the content of the folders and what is done inside each code. Mostly Python and OpenFOAM codes - although some MATLAB (...) could appear. Eventually this README.md file will become an ordered summary of all the work related to this topic.
+<a href="https://orcid.org/0000-0003-2636-3128" target="orcid.widget" rel="noopener noreferrer" style="vertical-align:top;"><img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" style="width:1em;margin-right:.5em;" alt="ORCID iD icon">orcid.org/0000-0003-2636-3128</a>
  
 ## 12-steps-CFD
 These are the notebooks from the Lorena A. Barba course "*12 steps to CFD*" in Python. They have different stuff from other pages as well as the main equations written on them.

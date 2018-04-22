@@ -6,9 +6,10 @@ from scipy.interpolate import interp1d
 # Get the inputs from the terminal line
 L = float(sys.argv[1])
 theta = float(sys.argv[2])
+folderNum = float(sys.argv[3])
 
 # Delete the previous blockMeshDict
-os.system("rm ./system/blockMeshDict")
+os.system("rm ./baseCase/system/blockMeshDict")
 
 # Interpolate the inside region of the diffuser
 triX = np.array([2+L*np.cos(np.deg2rad(theta)),
@@ -42,48 +43,48 @@ FoamFile
 bMD2 = """
 z1  0.0; 
 z2  0.1; 
-Nup   40;
-Nuu   20;
-Ncowl 7;
-Naxis 70;
-Ninf  100;
-Nramp 100;
-Ndown 50;
+Nup   80;
+Nuu   40;
+Ncowl 20;
+Naxis 150;
+Ninf  200;
+Nramp 200;
+Ndown 100;
 
 convertToMeters 1;
 
 vertices
 (
-	(0.0	0.0		$z1) // Point 0
+	(1.0	0.0		$z1) // Point 0
 	(2.0	0.0		$z1) // Point 1
 	($DLcO	$LsO	$z1) // Point 2
 	($TLcO	0.1		$z1) // Point 3
-	(0.0	0.8		$z1) // Point 4
+	(1.0	0.8		$z1) // Point 4
 	(2.0	0.8		$z1) // Point 5
 	($DLcO	0.8		$z1) // Point 6
 	($TLcO	0.8		$z1) // Point 7
-	(0.0	0.85	$z1) // Point 8
+	(1.0	0.85	$z1) // Point 8
 	(2.0	0.85	$z1) // Point 9
 	($ULcO	0.85	$z1) // Point 10
 	($TLcO	0.85	$z1) // Point 11
-	(0.0	1.85	$z1) // Point 12
+	(1.0	1.85	$z1) // Point 12
 	(2.0	1.85	$z1) // Point 13
 	($ULcO	1.85	$z1) // Point 14
 	($TLcO	1.85	$z1) // Point 15
 
-	(0.0	0.0		$z2) // Point 16
+	(1.0	0.0		$z2) // Point 16
 	(2.0	0.0		$z2) // Point 17
 	($DLcO	$LsO	$z2) // Point 18
 	($TLcO	0.1		$z2) // Point 19
-	(0.0	0.8		$z2) // Point 20
+	(1.0	0.8		$z2) // Point 20
 	(2.0	0.8		$z2) // Point 21
 	($DLcO	0.8		$z2) // Point 22
 	($TLcO	0.8		$z2) // Point 23
-	(0.0	0.85	$z2) // Point 24
+	(1.0	0.85	$z2) // Point 24
 	(2.0	0.85	$z2) // Point 25
 	($ULcO	0.85	$z2) // Point 26
 	($TLcO	0.85	$z2) // Point 27
-	(0.0	1.85	$z2) // Point 28
+	(1.0	1.85	$z2) // Point 28
 	(2.0	1.85	$z2) // Point 29
 	($ULcO	1.85	$z2) // Point 30
 	($TLcO	1.85	$z2) // Point 31
@@ -223,7 +224,7 @@ boundary
 """
     
 # Writing the data in the file
-with open('./system/blockMeshDict', "a") as bMD:
+with open('./baseCase/system/blockMeshDict', "a") as bMD:
     bMD.write(bMD1)
     bMD.write('\nLsO %.8f;\nULcO %.8f;\nDLcO %.8f;\nTLcO %.8f;\n' 
               %(L*np.sin(np.deg2rad(theta)),1.95+L*np.cos(np.deg2rad(theta)),
@@ -239,5 +240,11 @@ with open('./system/blockMeshDict', "a") as bMD:
     bMD.write('        ) \n')    
     bMD.write(bMD3)
     
+# Copy the base case folder with 
+os.system("cp -r baseCase/ ind%i/" %folderNum)
+
 # blockMesh and paraFoam calling
-os.system("blockMesh >bmOutput 2>&1 && paraFoam")
+# os.system("blockMesh -case ind%i >bmOutput 2>&1 && paraFoam" %folderNum)
+
+# just blockMesh calling
+os.system("blockMesh -case ind%i/ > bmOutput%i 2>&1" %(folderNum,folderNum))

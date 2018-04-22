@@ -38,13 +38,15 @@ FoamFile
     }
     lower
     {
-        type            patch;
+        type            symmetry;
+        inGroups        1(symmetry);
         nFaces          245;
         startFace       114270;
     }
     upper
     {
-        type            patch;
+        type            symmetry;
+        inGroups        1(symmetry);
         nFaces          245;
         startFace       114515;
     }
