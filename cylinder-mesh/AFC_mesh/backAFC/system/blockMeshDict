@@ -218,7 +218,7 @@ boundary
 
     lower
     {
-        type patch;
+        type symmetry;
         faces
         (
             (0 20 21 1)
@@ -228,8 +228,8 @@ boundary
     }   
 
     upper
-    {
-        type patch;
+    ;
+        type symmetry,
         faces
         (
             (36 16 17 37)

@@ -1,0 +1,108 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5.x                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : 5.x-197d9d3bf20a
+Exec   : blockMesh
+Date   : Apr 26 2018
+Time   : 01:15:49
+Host   : "lenovoYoga"
+PID    : 15806
+I/O    : uncollated
+Case   : /home/jlobatop/Documents/Thesis/senior-thesis/mesh-generation/joukowskyMesh/case
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Deleting polyMesh directory
+    "/home/jlobatop/Documents/Thesis/senior-thesis/mesh-generation/joukowskyMesh/case/constant/polyMesh"
+Creating block mesh from
+    "/home/jlobatop/Documents/Thesis/senior-thesis/mesh-generation/joukowskyMesh/case/system/blockMeshDict"
+Creating block edges
+No non-planar block faces defined
+Creating topology blocks
+Creating topology patches
+
+Creating block mesh topology
+--> FOAM Warning : 
+    From function Foam::polyMesh::polyMesh(const Foam::IOobject&, const Foam::Xfer<Foam::Field<Foam::Vector<double> > >&, const cellShapeList&, const faceListList&, const wordList&, const Foam::PtrList<Foam::dictionary>&, const Foam::word&, const Foam::word&, bool)
+    in file meshes/polyMesh/polyMeshFromShapeMesh.C at line 871
+    Found 12 undefined faces in mesh; adding to default patch.
+
+Check topology
+
+	Basic statistics
+		Number of internal faces : 6
+		Number of boundary faces : 24
+		Number of defined boundary faces : 24
+		Number of undefined boundary faces : 0
+	Checking patch -> block consistency
+
+Creating block offsets
+Creating merge list ..
+
+Creating polyMesh from blockMesh
+Creating patches
+Creating cells
+Creating points with scale 1
+    Block 0 cell size :
+        i : 0.00168588 .. 0.00558428
+        j : 0.00276841 .. 0.096
+        k : 0.1 .. 0.1
+
+    Block 1 cell size :
+        i : 0.00159565 .. 0.00602583
+        j : 0.00276841 .. 0.096
+        k : 0.1 .. 0.1
+
+    Block 2 cell size :
+        i : 0.00775399 .. 0.00590149
+        j : 0.00275661 .. 0.0955908
+        k : 0.1 .. 0.1
+
+    Block 3 cell size :
+        i : 0.00786728 .. 0.00597073
+        j : 0.00272544 .. 0.0945098
+        k : 0.1 .. 0.1
+
+    Block 4 cell size :
+        i : 0.00600343 .. 0.180103
+        j : 0.00276841 .. 0.096
+        k : 0.1 .. 0.1
+
+    Block 5 cell size :
+        i : 0.00600343 .. 0.180103
+        j : 0.00276841 .. 0.096
+        k : 0.1 .. 0.1
+
+
+There are no merge patch pairs edges
+
+Writing polyMesh
+----------------
+Mesh Information
+----------------
+  boundingBox: (-6 -6.00478 0) (10 6.00478 0.1)
+  nPoints: 147310
+  nCells: 73000
+  nFaces: 292655
+  nInternalFaces: 145345
+----------------
+Patches
+----------------
+  patch 0 (start: 145345 size: 220) name: inlet
+  patch 1 (start: 145565 size: 200) name: outlet
+  patch 2 (start: 145765 size: 380) name: airfoil
+  patch 3 (start: 146145 size: 255) name: lower
+  patch 4 (start: 146400 size: 255) name: upper
+  patch 5 (start: 146655 size: 146000) name: defaultFaces
+
+End
+

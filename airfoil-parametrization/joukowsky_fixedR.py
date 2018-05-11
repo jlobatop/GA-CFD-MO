@@ -1,5 +1,5 @@
 import matplotlib
-matplotlib.use('WX') 
+matplotlib.use('TkAgg')
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider, Button, RadioButtons
