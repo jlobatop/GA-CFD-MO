@@ -1,0 +1,29 @@
+#!/bin/bash
+
+## INPUTS (modify before simulation):
+genLim=10
+## GENETIC ALGORITHM LOOP
+# Create a variable to know the current generation
+gen=0
+# Create a folder for the first generation
+mkdir gen0/
+# Create a folder to store the data
+mkdir data/
+# Initialize the case
+python3 initialization.py
+# Loop over generations until the limit is reached
+until [ $gen -gt $genLim ]
+do 
+	# Print some representative lines
+	echo " "
+	echo -e "\033[0;36m\033[1m### GENERATION $gen\033[0m"
+	# Execute the current generation
+	./runGen $gen &
+	wait;
+	# Create a folder for next generation
+	mkdir gen$(($gen+1))/
+	# Apply the algorithm and determine the next generation
+	python3 evolution.py $gen &
+	wait;
+	((gen++))
+done

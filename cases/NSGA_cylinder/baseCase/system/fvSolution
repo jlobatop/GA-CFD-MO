@@ -1,0 +1,99 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers 
+{
+    U 
+    {
+        solver 					PBiCG;
+        tolerance				1e-05;
+        relTol 					0.01;
+        preconditioner 			DILU;
+    }
+    
+    UFinal 
+    {
+        solver 					PBiCG;
+        tolerance 				1e-05;
+        relTol 					0;
+        preconditioner 			DILU;
+    }
+    
+    p 
+    {
+        solver 					GAMG;
+        tolerance 				1e-06;
+        relTol 					0.001;
+        smoother 				GaussSeidel;
+        nPreSweeps 				2;
+        nPostSweeps 			1;
+        cacheAgglomeration 		on;
+        agglomerator 			faceAreaPair;
+        nCellsInCoarsestLevel 	10;
+        mergeLevels 			1;
+    }
+    
+    pFinal 
+    {
+        solver 					PCG;
+        tolerance 				1e-05;
+        relTol 					0.01;
+        preconditioner 			DIC;
+    }
+    
+    nuTildaFinal 
+    {
+        solver 					PBiCG;
+        tolerance 				1e-05;
+        relTol 					0.01;
+        preconditioner 			DILU;
+    }
+}
+
+PIMPLE
+{
+    nNonOrthogonalCorrectors 	0;
+    nOuterCorrectors 			2;
+    nCorrectors 				1;	
+    pRefCell 					0;
+    pRefValue 					0.0;
+    correctPhi 					off;
+    residualControl 
+    {
+        U 
+        {
+            tolerance 	1e-05;
+            relTol 		0.01;
+        }
+        "p.*" 
+        {
+            tolerance 	1e-05;
+            relTol 		0.01;
+        }
+    }
+}
+
+relaxationFactors
+{
+    fields 
+    {
+        p 		0.3;
+    }
+    equations 
+    {
+        ".*"	0.9;
+    }
+}

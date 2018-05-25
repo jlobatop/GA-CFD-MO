@@ -1,0 +1,170 @@
+#!/bin/bash
+
+## INPUTS (modify before simulation):
+# Maximum processors to be used
+procLim=32
+# Solver to be used
+solver='pimpleFoam'
+# Number of processors for each individual (EQUAL or SMALLER than procLim)
+nProc=1
+# If nProc is greater than 1, the decomposeParDict is required in $FOAM_CASE/system
+
+## DATA ADQUISITION
+# Receive the desired generation as input
+gen=$1
+
+# Get the parameter values for the different individuals
+x1=(`cat ./gen$gen/popA$gen`)
+x2=(`cat ./gen$gen/popf$gen`)
+
+# Get the legth in population 
+N=${#x1[@]}
+
+## CASE PREPARATION
+# Copy the N case folders into the generation folder
+ind=0
+until [ $ind -gt $(($N-1)) ]
+do 
+	cp -r baseCase/ gen$gen/ind$ind/
+	echo "..# Copying folder for individual $ind ... "
+	((ind++))
+done
+
+## BOUNDARY CONDITIONS
+# Generate the file with the velocity boundary conditions
+ind=0
+until [ $ind -gt $(($N-1)) ]
+do 
+	python3 sineFun.py $gen $ind ${x1[ind]} ${x2[ind]} 1000 &
+	wait;
+	echo ".## Boundary conditions generation for individual $ind ..."
+	((ind++))
+done
+
+
+## SIMULATION
+# Parallel individual computing
+if [ $nProc -gt 1 ] 
+then
+	# Move to the generation folder
+	cd gen$gen
+	# If parallel computing is desired, the mesh must be first decomposed
+	ind=0
+	until [ $ind -gt $(($N-1)) ]
+	do 
+		decomposePar -case ind$ind > DPg"$gen"i"$ind" 2>&1 &
+		wait;
+		mv DPg"$gen"i"$ind" ind$ind/DPg"$gen"i"$ind"
+		echo ".## decomposePar for individual $ind ..."
+		((ind++))
+	done
+	# All processors will be queued until all are used 
+	ind=0
+	currentP=0
+	until [ $ind -gt $(($N-1)) ]
+	do 
+		# If all processors are not in use yet
+		if [ $currentP != $procLim ] 
+		then
+			# Send another simulation
+			mpirun -np $nProc $solver -case ind$ind -parallel > RUNg"$gen"i"$ind" 2>&1 & 
+			# Store the PID of the above process
+			pids[${ind}]=$!
+			echo -e "\033[1;34m\033[1m.## Sending ind$ind to simulation...\033[0m"
+			currentP=$(($currentP+$nProc))
+			((ind++))
+		# Then, wait until completion and fill processors again
+		else
+			# Wait until all PID in the list has been completed
+			for pid in ${pids[*]}; do
+			    wait $pid
+			done
+			# Delete the current array with all PID
+			unset pids
+			# Restart the number of processors currently in use
+			currentP=0
+		fi
+	done
+	# Wait until all PID in the list has been completed
+	for pid in ${pids[*]}; do
+	    wait $pid
+	done
+	# If parallel computing is desired, the mesh must be reconstructed
+	ind=0
+	until [ $ind -gt $(($N-1)) ]
+	do 
+		reconstructPar -case ind$ind > RPg"$gen"i"$ind" 2>&1 &
+		wait;
+		mv RPg"$gen"i"$ind" ind$ind/RPg"$gen"i"$ind"
+		echo ".## reconstructPar for individual $ind ..."
+		((ind++))
+	done
+	# Return to main directory
+	cd ..
+# Serial individual computing
+else
+	# Move to the generation folder
+	cd gen$gen
+	# All processors will be queued until all are used 
+	ind=0
+	currentP=0
+	until [ $ind -gt $(($N-1)) ]
+	do 
+		# If all processors are not in use yet
+		if [ $currentP != $procLim ] 
+		then
+			# Send another simulation
+			$solver -case ind$ind > RUNg"$gen"i"$ind" 2>&1 &
+			# Store the PID of the above process
+			pids[${ind}]=$!
+			echo -e "\033[1;34m\033[1m.## Sending ind$ind to simulation...\033[0m"
+			currentP=$(($currentP+$nProc))
+			((ind++))
+		# Then, wait until completion and fill processors again
+		else
+			# Wait until all PID in the list has been completed
+			for pid in ${pids[*]}; do
+			    wait $pid
+			done
+			# Delete the current array with all PID
+			unset pids
+			# Restart the number of processors currently in use
+			currentP=0
+		fi
+	done
+	# Wait until all PID in the list has been completed
+	for pid in ${pids[*]}; do
+	    wait $pid
+	done
+	# Return to main directory
+	cd ..
+fi
+# After the simulation, move the output to each 'individual' folder
+ind=0
+until [ $ind -gt $(($N-1)) ]
+do 
+	mv gen$gen/RUNg"$gen"i"$ind" gen$gen/ind$ind/RUNg"$gen"i"$ind"
+	echo "..# Moving individual $ind to its folder..."
+	((ind++))
+done
+
+## POST-PROCESSING
+# Create a directory to store the results
+mkdir gen$gen/data
+# Post-process every individual
+ind=0
+until [ $ind -gt $(($N-1)) ]
+do 
+	echo -e ".## \033[1mPost-processing\033[0m individual $ind ... \033[0m"
+	# OpenFOAM file generation
+	touch gen$gen/ind$ind/g"$gen"i"$ind".OpenFOAM
+	# Forces plot and analysis - fitness evaluation
+	echo "..# Force plotting for individual $ind ... "
+	python3 forcePlotAnalysis.py $gen $ind;
+	((ind++))
+done
+
+## FITNESS
+# Once results are obtained, get a file will all fitness
+python3 fitness.py $gen
+echo -e ".## \033[1mFitness\033[0m calculation for generation $gen ... "

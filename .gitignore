@@ -1,4 +1,7 @@
-# Ignore all the listed items
+# Ignore Jupyter Notebook's check points, Python interpreter cache and Linux swap files .swp
+# If .swp are necessary, let me know and I will commit the change.
 .ipynb_checkpoints
+.tox
+.DS_Store
 __pycache__
 .swp

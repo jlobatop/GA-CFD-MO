@@ -1,0 +1,167 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+pc 		0.25;
+rPos	6;
+rNeg	-6;
+l 		10;
+ypcPos 	0.25;
+ypcNeg 	-0.25;
+maxZ 	0.5;
+minZ	0.0;
+
+circNeg	-4.242640687;
+circPos	4.242640687;
+
+Npre	28;
+Npost	40;
+Nwake	100;
+Nup		40;
+Nlow	40;
+Nz 		1;
+
+pre 	1;
+post 	1;
+wake	15;
+yDir	40;
+zDir	1;
+
+convertToMeters 1;
+
+vertices
+(
+	($pc	$rNeg 	$minZ)		// point 0
+	(1.0 	$rNeg 	$minZ)		// point 1
+	($l 	$rNeg 	$minZ)		// point 2
+	($pc 	$ypcNeg	$minZ)		// point 3
+	($rNeg 	0.0		$minZ)		// point 4
+	(0.0 	0.0		$minZ)		// point 5
+	(1.0	0.0		$minZ)		// point 6
+	($l 	0.0		$minZ)		// point 7
+	($pc 	$ypcPos	$minZ)		// point 8
+	($pc 	$rPos	$minZ)		// point 9
+	(1.0	$rPos	$minZ)		// point 10
+	($l 	$rPos	$minZ)		// point 11
+
+	($pc	$rNeg 	$maxZ)		// point 12
+	(1.0 	$rNeg 	$maxZ)		// point 13
+	($l 	$rNeg 	$maxZ)		// point 14
+	($pc 	$ypcNeg	$maxZ)		// point 15
+	($rNeg 	0.0		$maxZ)		// point 16
+	(0.0 	0.0		$maxZ)		// point 17
+	(1.0	0.0		$maxZ)		// point 18
+	($l 	0.0		$maxZ)		// point 19
+	($pc 	$ypcPos	$maxZ)		// point 20
+	($pc 	$rPos	$maxZ)		// point 21
+	(1.0	$rPos	$maxZ)		// point 22
+	($l 	$rPos	$maxZ)		// point 23
+);
+
+blocks
+(
+    hex (17 15 12 16 5 3 0 4) 	($Npre 		$Nlow 	$Nz) 	simpleGrading ($pre 	$yDir	$zDir)		// block 0
+    hex (5 8 9 4 17 20 21 16) 	($Npre 		$Nup 	$Nz) 	simpleGrading ($pre 	$yDir 	$zDir)		// block 1
+    hex (15 18 13 12 3 6 1 0) 	($Npost 	$Nlow 	$Nz) 	simpleGrading ($post 	$yDir	$zDir)		// block 2
+    hex (8 6 10 9 20 18 22 21) 	($Npost 	$Nup 	$Nz) 	simpleGrading ($post 	$yDir	$zDir)		// block 3
+    hex (18 19 14 13 6 7 2 1) 	($Nwake 	$Nlow 	$Nz) 	simpleGrading ($wake 	$yDir	$zDir)		// block 4
+    hex (6 7 11 10 18 19 23 22)	($Nwake 	$Nup 	$Nz) 	simpleGrading ($wake 	$yDir	$zDir)		// block 5
+
+
+/*    ( 
+        (
+        	(0.2 0.8 1)
+        	(0.8 0.2 1)
+        )
+        (
+        	(0.2 0.8 1)
+        	(0.8 0.2 1)
+        )
+        (
+        	(0.2 0.8 1)
+        	(0.8 0.2 1)
+        )
+    )*/
+);
+
+edges
+(
+	// Upper circular inlet 
+	arc 4  9  ($circNeg $circPos $minZ)
+	arc 16 21 ($circNeg $circPos $maxZ)
+
+	// Lower circular inlet
+	arc 4  0  ($circNeg $circNeg $minZ)
+	arc 16 12 ($circNeg $circNeg $maxZ)
+);
+
+boundary
+(
+	inlet
+    {
+        type patch;
+        faces
+        (
+            (9 21 16 4)
+            (4 16 12 0)
+        );
+    }   
+
+    outlet
+    {
+        type patch;
+        faces
+        (
+            (23 11 7 19)
+            (19 7 2 14)
+        );
+    }   
+
+
+    airfoil
+    {
+        type wall;
+        faces
+        (
+            (8 20 18 6)
+            (6 18 15 3)
+            (17 5 3 15)
+            (20 8 5 17)
+        );
+    }   
+
+    lower
+    {
+        type symmetry;
+        faces
+        (
+            (0 12 13 1)
+            (1 13 14 2)
+        );
+    }   
+
+    upper
+    {
+        type symmetry;
+        faces
+        (
+            (21 9 10 22)
+            (22 10 11 23)
+        );
+    }
+
+);
+
+// ************************************************************************* //
