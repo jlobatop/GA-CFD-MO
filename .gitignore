@@ -1,0 +1,4 @@
+# Ignore all the listed items
+.ipynb_checkpoints
+__pycache__
+.swp
