@@ -12,112 +12,195 @@ FoamFile
     class       dictionary;
     object      blockMeshDict;
 }
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-x1  -3.0;
-x2   2.0;
-x3  10.0;
-y1  -1.0;
-y2   4.0;
-z1   0.0;
-z2   0.1;
+// * * * * * * * * * * * * * * * BASIC INPUTS * * * * * * * * * * * * * * *  //
+beforeCavity  	 2.0;	// horizontal length before the cavity 
+cavityLength	 2.0;	// cavity horizontal length 
+afterCavity 	 9.0;	// horizontal length after the cavity 
 
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-mCel  20;
-Nx1  #calc "3.0*$mCel";
-Nx2  #calc "2.0*$mCel";
-Nx3  #calc "8.0*$mCel";
-Ny1  #calc "3.0*$mCel";
-Ny2  #calc "4.0*$mCel";
+cavityHeight 	 1.0;	// cavity vertical length
+freestream		 3.0;	// vertical length of the freestream domain
 
-// // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-// Nx1   60;
-// Nx2   40;
-// Nx3  160;
-// Ny1   40;
-// Ny2   80;
+N 				  50;	// cavity cells in the horizontal direction (Nx2)
 
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-convertToMeters 1;
+g12				20.0;	// grading for the cavity most-left wall 
+g21				15.0;	// grading for the cavity lower wall 
 
+
+// * * * * * * * * * * * * * * ADDITIONAL INPUTS * * * * * * * * * * * * * * //
+z1   			0.00;	// most negative z component
+z2   			0.05;	// most positive z component
+
+cCx1			0.20;	// percentage of chord of the left wall subdivision
+cCx2			0.60;	// percentage of chord of the center cavity horizontal subdivision
+cCx3			0.20;	// percentage of chord of the right wall subdivision
+cCy1			0.20;	// percentage of chord of the lower wall subdivision
+cCy2			0.60;	// percentage of chord of the center wall vertical subdivision
+cCy3			0.20;	// percentage of chord of the upper wall (forced) subdivision
+cNx1			0.35;	// percentage of cells of the left wall subdivision
+cNx2			0.30;	// percentage of cells of the center cavity horizontal subdivision
+cNx3			0.35;	// percentage of cells of the right wall subdivision
+cNy1			0.35;	// percentage of cells of the lower wall subdivision
+cNy2			0.30;	// percentage of cells of the center wall vertical subdivision
+cNy3			0.35;	// percentage of cells of the upper wall (forced) subdivision
+
+// g11				 0.1;	// grading for the freestream (vertical forced grading) before the cavity
+// g13				0.25;	// grading for the cavity most-right wall
+// g14				10.0;	// grading for the freestream (vertical forced grading) after the cavity
+// g22				0.08;	// grading for the cavity upper (horizontal forced grading)
+// g23				12.0;	// grading for the freestream wall
+// Uncomment for custom gradings
+
+
+// * * * * * * * * * * * * * * * CALCULATIONS * * * * * * * * * * * * * * *  //
+// Dimensions and lengths
+x1 		#calc 		"$beforeCavity";
+x2 		#calc 		"$x1+$cavityLength";
+x3 		#calc 		"$x2+$afterCavity";
+y1 		#calc 		"$cavityHeight";
+y2 		#calc 		"$y1+$freestream";
+// Freestream vertical divisions
+fCy1	#calc 		"$cCy3 * $cavityHeight / $freestream";
+fCy2	#calc 		"1 - $fCy1";
+// Freestream horizontal divisions
+fCx2	#calc 		"$cCx1 * $cavityLength / $beforeCavity";
+fCx1	#calc 		"1 - $fCx2";
+fCx3	#calc 		"$cCx3 * $cavityLength / $afterCavity";
+fCx4	#calc 		"1 - $fCx3";
+// Number of cells
+NBC   	#calc 		"std::floor(($fCx1 * $beforeCavity * $cNx2 * $N)/( $cCx2 * $cavityLength) + $cNx2 * $N)";
+NAC   	#calc 		"std::floor(($fCx4 * $afterCavity * $cNx2 * $N)/( $cCx2 * $cavityLength) + $cNx3 * $N)";
+NCH   	#calc 		"std::floor(($cCy2 * $cavityHeight * $cNx2 * $N )/( $cNy2 * $cCx2 * $cavityLength))";
+NF   	#calc 		"std::floor(($fCy2 * $freestream * $cNx2 * $N )/( $cCx2 * $cavityLength) + $cNy3 * $NCH)";
+// Freestream horizontal cells
+fNx2	#calc 		"$cNx1 * $N / $NBC";
+fNx1	#calc 		"1 - $fNx2";
+fNx3	#calc 		"$cNx3 * $N / $NAC";
+fNx4	#calc 		"1 - $fNx3";
+// Freestream vertical cells
+fNy1	#calc 		"$cNy3 * $NCH / $NF";
+fNy2	#calc 		"1 - $fNy1";
+// Automatic gradings (comment for custom gradings)
+g11		#calc		"1 / $g12";
+g13		#calc		"1 / $g12";
+g14					$g12;
+g22		#calc		"1 / $g21";
+g23					$g21;
+
+// * * * * * * * * * * * * * * * * BLOCK MESH CODE * * * * * * * * * * * * * //
+// Vertices of the blocks
 vertices
 (
-	($x1	0.0		$z1)
-	(0.0	0.0		$z1)
+	// Most negative z-plane
 	(0.0	$y1		$z1)
-	($x2	$y1		$z1)
+	($x1	$y1		$z1)
+	($x1	0.0		$z1)
 	($x2	0.0		$z1)
-	($x3	0.0		$z1)
-	($x3	$y2		$z1)	
+	($x2	$y1		$z1)
+	($x3	$y1		$z1)
+	($x3	$y2		$z1)
 	($x2	$y2		$z1)
-	(0.0	$y2		$z1)
 	($x1	$y2		$z1)
+	(0.0	$y2		$z1)
 
-	($x1	0.0		$z2)
-	(0.0	0.0		$z2)
+	// Most positive z-plane
 	(0.0	$y1		$z2)
-	($x2	$y1		$z2)
+	($x1	$y1		$z2)
+	($x1	0.0		$z2)
 	($x2	0.0		$z2)
-	($x3	0.0		$z2)
-	($x3	$y2		$z2)	
+	($x2	$y1		$z2)
+	($x3	$y1		$z2)
+	($x3	$y2		$z2)
 	($x2	$y2		$z2)
-	(0.0	$y2		$z2)
 	($x1	$y2		$z2)
+	(0.0	$y2		$z2)
 );
 
+// Blocks of the mesh
 blocks
 (
-    hex (0 1 8 9 10 11 18 19) ($Nx1 $Ny2 1) simpleGrading 		//block 0
+	// Freestream before cavity
+    hex (0 1 8 9 10 11 18 19) 
+    // FBeforeC number of cells
+    ($NBC $NF 1) simpleGrading
     (
+		// x-axis grading
     	(
-    		(0.9	0.8		1)
-    		(0.1	0.2		0.0625)
+    		($fCx1		$fNx1 		1.0)	
+    		($fCx2		$fNx2		$g11)
     	)
-    	16
+		// y-axis grading
+		(
+			($fCy1		$fNy1 		$g23)	
+			($fCy2		$fNy2		1.0)
+		)		
+    	// z-axis grading
     	1
     )
-    hex (1 4 7 8 11 14 17 18) ($Nx2 $Ny2 1) simpleGrading 		//block 1
+
+	// Freestream above cavity
+    hex (1 4 7 8 11 14 17 18) 
+    // FAboveC number of cells
+	($N $NF 1) simpleGrading
     (
+		// x-axis grading
     	(
-    		(0.2	0.3		16)
-    		(0.6	0.4		1)
-    		(0.2	0.3		0.0625)
+    		($cCx1		$cCx1		$g12)
+    		($cCx2		$cNx2		1.0)
+    		($cCx3		$cNx3		$g13)
     	)
-    	16
+		// y-axis grading
+		(
+			($fCy1		$fNy1 		$g23)	
+			($fCy2		$fNy2		1.0)
+		)		
+		// z-axis grading
     	1
     )
-    hex (2 3 4 1 12 13 14 11) ($Nx2 $Ny1 1) simpleGrading 		//block 2
-    (
-    	(
-    		(0.2	0.3		16)
-    		(0.6	0.4		1)
-    		(0.2	0.3		0.0625)
-    	)
-    	(
-    		(0.2	0.3		12)
-    		(0.6	0.4		1)
-    		(0.2	0.3		0.08333)
-    	)
-    	1
-    )
-    hex (4 5 6 7 14 15 16 17) ($Nx3 $Ny2 1) simpleGrading 		//block 3
+    // Freestream after cavity
+    hex (4 5 6 7 14 15 16 17) 
+    // FAfterC number of cells
+    ($NAC $NF 1) simpleGrading
 	(
+		// x-axis grading
     	(
-    		(0.1	0.2		16)
-    		(0.9	0.8		1)
+    		($fCx3		$fNx3 		$g14)	
+    		($fCx4		$fNx4		1.0)
     	)
-    	16
+		// y-axis grading
+		(
+			($fCy1		$fNy1 		$g23)	
+			($fCy2		$fNy2		1.0)
+		)		
+		// z-axis grading
+    	1
+    )
+	// Cavity
+    hex (2 3 4 1 12 13 14 11) 
+    // Cavity number of cells
+    ($N $NCH 1) simpleGrading
+    (
+		// x-axis grading
+    	(
+    		($cCx1		$cCx1		$g12)
+    		($cCx2		$cNx2		1.0)
+    		($cCx3		$cNx3		$g13)
+    	)
+		// y-axis grading
+    	(
+    		($cCy1		$cCy1		$g21)
+    		($cCy2		$cNy2		1.0)
+    		($cCy3		$cNy3		$g22)
+    	)
+		// z-axis grading
     	1
     )
 );
 
-edges
-(
-);
-
+// Boundary faces for BC
 boundary
 (
+	// Inlet boundary face
 	inlet
     {
         type patch;
@@ -126,7 +209,7 @@ boundary
             (9 19 10 0)
         );
     }   
-
+    // Outlet boundary face
 	outlet
     {
         type patch;
@@ -135,7 +218,7 @@ boundary
             (16 6 5 15)
         );
     }   
-
+    // Upper boundary condition
 	upper
     {
         type patch;
@@ -146,20 +229,36 @@ boundary
             (7 6 16 17)
         );
     }   
-
-	wall
+    // Lower boundary before the cavity
+	lowerBefore
     {
         type patch;
         faces
         (
             (0 10 11 1)
+        );
+    }   
+    // Cavity boundary
+	cavity
+    {
+        type patch;
+        faces
+        (
             (1 11 12 2)
             (2 12 13 3)
             (14 4 3 13)
+        );
+    }   
+    // Lower boundary after the cavity
+	lowerAfter
+    {
+        type patch;
+        faces
+        (
             (4 14 15 5)
         );
     }   
-
+    // Empty faces (front and back boundaries)
 	frontAndBack
     {
         type empty;
@@ -176,5 +275,3 @@ boundary
         );
     }   
 );
-
-// ************************************************************************* //
