@@ -5,3 +5,5 @@
 .DS_Store
 __pycache__
 .swp
+# Ignore the site folder for documentation
+site/
