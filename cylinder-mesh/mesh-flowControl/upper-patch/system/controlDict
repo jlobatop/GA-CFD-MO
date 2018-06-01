@@ -10,44 +10,50 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    location    "system";
     object      controlDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     simpleFoam;
 
-startFrom       startTime;
+application         pimpleFoam;
 
-startTime       0;
+startFrom           latestTime;
 
-stopAt          endTime;
+startTime           0.0;
 
-endTime         2000;
+stopAt              endTime;
 
-deltaT          1;
+endTime             100.0;
 
-writeControl    timeStep;
+deltaT              0.005;
 
-writeInterval   100;
+writeControl        runTime;
 
-purgeWrite      0;
+writeInterval       0.5;
 
-writeFormat     ascii;
+purgeWrite          0;
 
-writePrecision  6;
+writeFormat         ascii;
 
-writeCompression off;
+writePrecision      8;
 
-timeFormat      general;
+writeCompression    off;
 
-timePrecision   6;
+timeFormat          general;
 
-runTimeModifiable true;
+timePrecision       12;
+
+runTimeModifiable   true;
+
+adjustTimeStep      true;
+
+maxCo               0.5;
+
+maxDeltaT           1;
 
 functions
 {
-    #includeFunc streamlines
+
 }
 
 // ************************************************************************* //
