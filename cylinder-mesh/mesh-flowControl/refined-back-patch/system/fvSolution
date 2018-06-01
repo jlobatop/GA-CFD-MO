@@ -10,66 +10,90 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    location    "system";
     object      fvSolution;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-solvers
+solvers 
 {
-    p
+    U 
     {
-        solver          GAMG;
-        tolerance       1e-06;
-        relTol          0.1;
-        smoother        GaussSeidel;
+        solver 					PBiCG;
+        tolerance				1e-05;
+        relTol 					0.01;
+        preconditioner 			DILU;
     }
-
-    U
+    
+    UFinal 
     {
-        solver          smoothSolver;
-        smoother        GaussSeidel;
-        nSweeps         2;
-        tolerance       1e-08;
-        relTol          0.1;
+        solver 					PBiCG;
+        tolerance 				1e-05;
+        relTol 					0;
+        preconditioner 			DILU;
     }
-
-    nuTilda
+    
+    p 
     {
-        solver          smoothSolver;
-        smoother        GaussSeidel;
-        nSweeps         2;
-        tolerance       1e-08;
-        relTol          0.1;
+        solver 					GAMG;
+        tolerance 				1e-06;
+        relTol 					0.001;
+        smoother 				GaussSeidel;
+        nPreSweeps 				2;
+        nPostSweeps 			1;
+        cacheAgglomeration 		on;
+        agglomerator 			faceAreaPair;
+        nCellsInCoarsestLevel 	10;
+        mergeLevels 			1;
+    }
+    
+    pFinal 
+    {
+        solver 					PCG;
+        tolerance 				1e-05;
+        relTol 					0.01;
+        preconditioner 			DIC;
+    }
+    
+    nuTildaFinal 
+    {
+        solver 					PBiCG;
+        tolerance 				1e-05;
+        relTol 					0.01;
+        preconditioner 			DILU;
     }
 }
 
-SIMPLE
+PIMPLE
 {
-    nNonOrthogonalCorrectors 0;
-    pRefCell        0;
-    pRefValue       0;
-
-    residualControl
+    nNonOrthogonalCorrectors 	0;
+    nOuterCorrectors 			2;
+    nCorrectors 				1;	
+    pRefCell 					0;
+    pRefValue 					0.0;
+    correctPhi 					off;
+    residualControl 
     {
-        p               1e-5;
-        U               1e-5;
-        nuTilda         1e-5;
+        U 
+        {
+            tolerance 	1e-05;
+            relTol 		0.01;
+        }
+        "p.*" 
+        {
+            tolerance 	1e-05;
+            relTol 		0.01;
+        }
     }
 }
 
 relaxationFactors
 {
-    fields
+    fields 
     {
-        p               0.3;
+        p 		0.3;
     }
-    equations
+    equations 
     {
-        U               0.7;
-        nuTilda         0.7;
+        ".*"	0.9;
     }
 }
-
-
-// ************************************************************************* //

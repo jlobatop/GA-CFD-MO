@@ -10,48 +10,46 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    location    "system";
     object      fvSchemes;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-ddtSchemes
+ddtSchemes 
 {
-    default         steadyState;
+    default                         backward;
 }
 
-gradSchemes
+gradSchemes 
 {
-    default         Gauss linear;
+    default 						Gauss linear;
 }
 
-divSchemes
+divSchemes 
 {
-    default         none;
-    div(phi,U)      bounded Gauss linearUpwind grad(U);
-    div(phi,nuTilda) bounded Gauss linearUpwind grad(nuTilda);
-    div((nuEff*dev2(T(grad(U))))) Gauss linear;
+    default 						Gauss linear;
+
+    div(phi,U) 						bounded Gauss upwind;
+    div((nuEff*dev(T(grad(U))))) 	Gauss linear;
+    div(phi,nuTilda) 				bounded Gauss upwind;
 }
 
-laplacianSchemes
+laplacianSchemes 
 {
-    default         Gauss linear corrected;
+    default 						Gauss linear corrected;
 }
 
-interpolationSchemes
+interpolationSchemes 
 {
-    default         linear;
+    default 						linear;
 }
 
-snGradSchemes
+snGradSchemes 
 {
-    default         corrected;
+    default 						corrected;
 }
 
-wallDist
+fluxRequired 
 {
-    method meshWave;
+    default 						no;
+    p ;
 }
-
-
-// ************************************************************************* //

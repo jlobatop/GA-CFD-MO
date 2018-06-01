@@ -9,15 +9,50 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    location    "constant";
-    object      transportProperties;
+    class       volVectorField;
+    location    "0";
+    object      U;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-transportModel  Newtonian;
+dimensions      [0 1 -1 0 0 0 0];
 
-nu              [0 2 -1 0 0 0 0] 1e-5;
-rhoRef 			1.0;
+internalField   uniform (0 0 0);
+
+boundaryField
+{
+    inlet
+    {
+	    type            fixedValue;
+		value           uniform (1.0 0.0 0.0);
+    }
+    outlet
+    {
+        type            zeroGradient;
+    }
+    wall
+    {
+        type            fixedValue;
+        value           uniform (0.0 0.0 0.0);
+    }
+    lower
+    {
+        type            symmetry;
+    }
+    upper
+    {
+        type            symmetry;
+    }
+    flowControl
+    {
+        type            fixedValue;
+        value           uniform (0.0 0.0 0.0);
+    }
+    defaultFaces
+    {
+        type            empty;
+    }
+}
+
 
 // ************************************************************************* //
