@@ -17,7 +17,7 @@ This is a Senior Thesis developed to get the BSc Aerospace Engineering at the Un
 
 This readme file is structured by ... (to be continued)
 
-.. contents:: **Table of Contents**
+.. contents:: Table of Contents
    :depth: 2
    ::backlinks "top"
 
