@@ -15,11 +15,13 @@ This is a Senior Thesis developed to get the BSc Aerospace Engineering at the Un
 :Advisors: Yves Dubief and Rafael Santamaria 
 :Institution: University of Vermont - Mechanical Engineering department
 
+The project requires some software to be present in the computer. The requisites are ``python3`` (with either ``jupyter notebook`` or ``jupyter lab`` to run the notebooks and understand the basics of the process), ``openFOAM`` (version 5.00 was used) and ``paraView`` (version 5.4.0). Required Python packages are the basic ``numpy``, ``matplotlib``, ``scipy``, ``numba``, ``sympy``... However ``optunity``, ``prettytable``, ``tdqm`` and ``prettytable`` are required to run every notebook.  The operating system used for Python commands and bash scripting was ``Ubuntu 16.04 LTS``. Compatibility with other OS have not been tested. 
+
 This readme file is structured by ... (to be continued)
 
 .. contents:: Table of Contents
    :depth: 2
-   ::backlinks "top"
+   :backlinks: top
 
 ********************************
 SITE (STILL) UNDER CONSTRUCTION
