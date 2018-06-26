@@ -2,15 +2,13 @@
 Genetic algorithms applied in Computer Fluid Dynamics for multiobjective optimization
 ######################################################################################
 
-.. |triki| image:: https://media.giphy.com/media/o5oLImoQgGsKY/giphy.gif
-
 .. |orcid| image:: https://img.shields.io/badge/id-0000--0003--2636--3128-a6ce39.svg
    :target: https://orcid.org/0000-0003-2636-3128
    :align: middle
 
-.. |mathTest| image:: https://www.codecogs.com/eqnedit.php?latex=x&plus;\partial&space;x
-   :target: https://latex.codecogs.com/gif.latex?x&plus;\partial&space;x
+.. |inlineMathEq| image:: https://latex.codecogs.com/png.latex?%5Cdpi%7B300%7D%20%5Cbg_white%20R%3Df%28%5Cmu_x%2C%20%5Cmu_y%29
    :align: middle
+   :height: 13
 
 This is a Senior Thesis developed for the BSc Aerospace Engineering at the University of Leon. However, this project was done at the University of Vermont during an exchange program. The main purpose of this thesis was to couple a metaheuristic optimization method, such as genetic algorithm (GA), with aerospace cases simulated with computer fluid dynamics (CFD) that have multiple objectives (MO).
 
@@ -20,7 +18,7 @@ This is a Senior Thesis developed for the BSc Aerospace Engineering at the Unive
 
 The project required some software to be present on the computer in order to properly run it. The requisites are ``python`` (version used was ``3.6.1``) (with either ``jupyter notebook`` or ``jupyter lab`` to execute the notebooks and understand the basics of the process), ``OpenFOAM`` (version 5.00 was used) and ``paraView`` (version 5.4.0). Required Python packages are the basic ``numpy``, ``matplotlib``, ``scipy``, ``numba``, ``sympy``... However ``optunity``, ``prettytable``, ``tdqm`` and ``prettytable`` are required to run every notebook.  The operating system used for Python bash commands and scripting was ``Ubuntu 16.04 LTS``. Compatibility with other OS has not been tested. 
 
-This readme file is structured by ... (TODO)
+This readme file is structured in two parts. The first one is a quick overview of the project, showing how to further use the code, the analyzed cases, the development of the code and a brief description of all the terms. However, in the second part there is a *folder by folder* analysis that lists the scripts and code of each folder with a brief description to find something in the future with a quick search. 
 
 The full report of the project is located at `https://github.com/jlobatop/senior-thesis-tex <https://github.com/jlobatop/senior-thesis-tex>`_.
 
@@ -111,7 +109,8 @@ Vortex supression in a cylinder wake
 A cylinder (amongst a lot of other objects) facing a stream may undergo vortex shedding under certain conditions. Vortex phenomena is associated with strong vibrations and oscillations that may cause structural damage to the object (specially if the frequency of the cylinder matches the natural frequency of the structure). In order to reduce it, different methods can be applied. In this case a passive blowing & suction flow control mechanism (preferred against a blowing mechanism that will not have a zero net momentum in the flow) is located in the rear part of a cylinder following the next schematics:
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_cylinder/cylinderMeshBC.png
-	:width: 400pt
+	:alt: cylinderMeshBC
+	:width: 400
 	:align: center
 
 Mesh was constructed with ``blockMesh`` and faces correspond the different `boundary conditions <https://github.com/jlobatop/GA-CFD-MO/tree/master/cases/NSGA_cylinder/baseCase>`_ having that the grey face is the flowControl patch where the blowing & suction mechanism is located. The optimization problem has as search variables the amplitude and frequency of a sinusoidal wave that governs the flow control mechanism, that will (certainly) modify the flow field. The standard deviation of the force in the cylinder surface was decomposed in two axis (X and Y) and the objective is to minimize both at the same time. Standard deviation represents not the frequency of the oscillations but its amplitude (trying to reduce it as much as possible).
@@ -119,29 +118,34 @@ Mesh was constructed with ``blockMesh`` and faces correspond the different `boun
 The individuals in this case don't make a Pareto front but they collapse in two solutions (or cluster of possible solutions). The next figure show these results:
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_cylinder/cylOpt.png
-	:width: 666pt
+	:alt: cylinder_optimization
+	:width: 666
 	:align: center
 
 Some animations of the 'steady-state' of the oscillations ('steady-state' refers here to the time where oscillations where continuous and repetitive) may clarify the behavior of this cylinder:
 
 - Cylinder with the flow control mechanism off:
 	.. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_cylinder/off.gif
-		:width: 500pt
+		:alt: flowControlOff
+		:width: 500
 		:align: center
 
 - Cylinder with the flow control on but a high fitness value (not efficient vortex cancellation):
-	.. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_cylinder/highFit.gif
-		:width: 500pt
+	.. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_cylinder/lowFit.gif
+		:alt: lowFitnessIndividual
+		:width: 500
 		:align: center
 
 - Flow control of the first possible solution:
 	.. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_cylinder/sol1.gif
-		:width: 500pt
+		:alt: solution1
+		:width: 500
 		:align: center
 
 - Flow control of the second possible solution:
 	.. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_cylinder/sol2.gif
-		:width: 500pt
+		:alt: solution2
+		:width: 500
 		:align: center
 
 Convergence in two points may not be the the optimal solution, so further study of this case is required.
@@ -152,25 +156,29 @@ Diffuser inlet geometry design
 The inlet of a jet engine determines the state of all the other elements of the enine, having that the overall efficiency will decrease if the diffuser performance it is not on the most optimum value. To increase the efficiency of a diffuser, the pressure ratio between freestream and diffuser outlet must be as high as possible (having a low entropy generation due to supersonic shock waves). The performance of a combustion chamber may also be improved if the Mach number at its inlet is maximum. Thus the parameter space variables are Mach at the diffuser outlet (supossing no turbomachinnery between diffuser and combustion chamber) and the pressure ratio (both will try to be the maximum). The search space variables are the length (L) and angle (theta) of the inlet of the diffuser as depicted by the next figure:
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_diffuser/diffuserMesh.png
+	:alt: diffuserMesh
+	:width: 400
 	:align: center
-	:width: 400pt
 
 In this case, the results form a Pareto front that separate unfeasible solutions from feasible non-optimal solutions:
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_diffuser/diffuserOpt.png
-	:width: 666pt
+	:alt: diffsuerOptimization
+	:width: 666
 	:align: center
 
 A sample from the first generation may look like:
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_diffuser/diffuserGen0.png
-	:width: 666pt
+	:alt: diffuserFirstGeneration
+	:width: 666
 	:align: center
 
 However, a sample from the last simulated generation looks like:
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_diffuser/diffuserLastGen.png
-	:width: 666pt
+	:alt: diffuserLastGeneration
+	:width: 666
 	:align: center
 
 As it can be seen, the expected case where the shock wave meets the cowl is achieved, along other cases that exchange some pressure ratio for a higher Mach number on the outlet. 
@@ -178,19 +186,21 @@ As it can be seen, the expected case where the shock wave meets the cowl is achi
 Airfoil shape optimization
 ===========================
 
-Airfoils are the classical problem of optimization applied to CFD. However, it is usually solved with adjoint methods. In this project, a new approach has been used: geometrical optimization with genetic algorithms. Two parameter space variable cases have been tested, but both depend on the same search space variables. Airfoils have been parametrized with a `Joukowsky transform <https://en.wikipedia.org/wiki/Joukowsky_transform>`_ that depends on mu_x and mu_y as the coordinates of the circle in the Zeta plane. Although it may seem that a circle is fully defined with three parameters (x and y positions of the center and radius), the radius in this case must be `fixed <https://github.com/jlobatop/GA-CFD-MO/blob/master/airfoil-parametrization/joukowsky/Joukowsky_fixedR.ipynb>`_ so the circle always intersects (-1,0) or (1,0), having two possible circles in the Zeta plane (and keeping the one that faces the freestream from left to right). Making the restriction that |mathTest| ``R=f(mu_x, mu_y)`` instead of having a `variable radius <https://github.com/jlobatop/GA-CFD-MO/blob/master/airfoil-parametrization/joukowsky/Joukowsky_variableR.ipynb>`_, the shape obtained in the zeta plane will look like as an airfoil (more or less) and weird self-intersecting shapes will be avoided. 
+Airfoils are the classical problem of optimization applied to CFD. However, it is usually solved with adjoint methods. In this project, a new approach has been used: geometrical optimization with genetic algorithms. Two parameter space variable cases have been tested, but both depend on the same search space variables. Airfoils have been parametrized with a `Joukowsky transform <https://en.wikipedia.org/wiki/Joukowsky_transform>`_ that depends on mu_x and mu_y as the coordinates of the circle in the Zeta plane. Although it may seem that a circle is fully defined with three parameters (x and y positions of the center and radius), the radius in this case must be `fixed <https://github.com/jlobatop/GA-CFD-MO/blob/master/airfoil-parametrization/joukowsky/Joukowsky_fixedR.ipynb>`_ so the circle always intersects (-1,0) or (1,0), having two possible circles in the Zeta plane (and keeping the one that faces the freestream from left to right). Making the restriction that |inlineMathEq| instead of having a `variable radius <https://github.com/jlobatop/GA-CFD-MO/blob/master/airfoil-parametrization/joukowsky/Joukowsky_variableR.ipynb>`_, the shape obtained in the zeta plane will look like as an airfoil (more or less) and weird self-intersecting shapes will be avoided. 
 
 Before showing up the results of the two different optimization, it is worth noticing that the only differences between the two is just one Python script used to include a different fitness computation (and its reference in the `fitness.py`). This shows the adaptability of the code. The mesh has been previously designed in 6 blocks that have a diamond-shaped airfoil in the center as it can be seen in the next figure:
 
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_joukowskyCDCL/joukRombo.png
-	:width: 400pt
+	:alt: joukowskyRhombus
+	:width: 400
 	:align: center
 
 This mesh is converted to an airfoil depending on the values of mu_x and mu_y of the Joukowsky transform by applying ``blockMesh`` to a file with the coordinates of the transformation. One of the possible airfoils is:
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_joukowskyCDCL/joukFoil.png
-	:width: 400pt
+	:alt: joukowskyAirfoil
+	:width: 400
 	:align: center
 
 Lift and drag 
@@ -199,19 +209,22 @@ Lift and drag
 The first case, the two parameter space variables that have been tried are the classical lift versus drag comparison. There is a trade-off between lift and drag in airfoils, as it can be seen in the majority of the polar diagrams. The results after the optimization process is:
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_joukowskyCDCL/cLcDopt.png
-	:width: 666pt
+	:alt: liftDrag_Optimization
+	:width: 666
 	:align: center
 
 One sample of the first generation is:
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_joukowskyCDCL/joukClCdgen0.png
-	:width: 666pt
+	:alt: liftDrag_firstGeneration
+	:width: 666
 	:align: center
 
 Three airfoils taken from the last generation show that the airfoils are thin and have a wide variety of curvatures:
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_joukowskyCDCL/joukClCdLastGen.png
-	:width: 666pt
+	:alt: liftDrag_lastGeneration
+	:width: 666
 	:align: center
 
 Lift-to-drag ratio and area 
@@ -221,19 +234,22 @@ The search space x and y axis are the same as before, bur the distribution of th
 
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_joukowsky/LDAopt.png
-	:width: 666pt
+	:alt: liftdragArea_Optimization
+	:width: 666
 	:align: center
 
 A sample of the first generation is the one shown in the image below (but the sample for the initial generation shown in the `previous section <https://github.com/jlobatop/GA-CFD-MO#lift-and-drag>`_ would be also a valid sample because Sobol initialization was used, which is a quasi-random low discrepancy sequences that returns the same sampling points for both cases):
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_joukowsky/joukLDAgen0.png
-	:width: 666pt
+	:alt: liftdragArea_firstGeneration
+	:width: 666
 	:align: center
 
 However the results in this case are way different from the ones before. These have a larger inner area of the airfoil for most of the cases or a higher curvature:
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_joukowsky/joukLDAlastGen.png
-	:width: 666pt
+	:alt: liftdragArea_lastGeneration
+	:width: 666
 	:align: center
 
 Conclusions
@@ -272,21 +288,21 @@ joukowsky
 The `Joukowsky transform <https://en.wikipedia.org/wiki/Joukowsky_transform>`_ has been coded in a detailed notebook for a circle defined with three parameters (position of the center and `variable radius <https://github.com/jlobatop/GA-CFD-MO/blob/master/airfoil-parametrization/joukowsky/Joukowsky_variableR.ipynb>`_) and a circle defined only with the center (having a `fixed radius <https://github.com/jlobatop/GA-CFD-MO/blob/master/airfoil-parametrization/joukowsky/Joukowsky_fixedR.ipynb>`_ so the circle always goes through points (1,0) and (-1,0), having shapes that look like airfoils). Joukowsky transformation with *variable radius* may create outputs like:
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/airfoil-parametrization/joukowsky/variableR.png
-	:width: 500pt
+	:width: 400
 	:align: center
 
 whereas the transformation with *fixed radius* give two possible airfoils:
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/airfoil-parametrization/joukowsky/fixedR.png
-	:width: 500pt
+	:scale: 50
 	:align: center
 
-These codes have also been coded to be interactive, having sliders to change the center (and the radius when it is variable). The two ``.py`` files in this folder are the two different cases presented and to run them just execute ``python *.py`` (tested with ``Python 3.6.1``).
+These codes have also been coded to be interactive, having sliders to change the center (and the radius when it is variable). The two ``.py`` files are interactive figures with sliders and to run them just execute ``python *.py``.
 
 NACA4
 ------
 
-The notebook has coded the `equations <http://www.aerospaceweb.org/question/airfoils/q0041.shtml>`_ to compute a NACA 4-digit series airfoil, different grading tools to get points over certain range, interpolation of an airfoil (not very useful with airfoils which equation is known though) over certain points, and storage of the points in a `.csv` in a sorted way beginning from the trailing edge towards the leading edge over the upper surface and then back over the lower surface.
+The notebook has coded the required `equations <http://www.aerospaceweb.org/question/airfoils/q0041.shtml>`_ to compute a NACA 4-digit series airfoil, different grading tools to get points over certain range, interpolation of an airfoil over certain points (not very useful with airfoils whose equation is known though), and storage of the points in a `.csv` in a sorted way beginning from the trailing edge towards the leading edge over the upper surface and then back over the lower surface.
 
 ----------------------------------------------------------------
 
@@ -346,12 +362,14 @@ Mesh generator of a cavity inside a freestream flow with a high level of customi
 cNy3). Custom gradings for all the other walls are also additional inputs, but if not specified they will be computed automatically depending on the ones fixed for the other directions. 
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cavity-mesh/input.png
-	:width: 500pt
+	:alt: inputValues
+	:width: 500
 	:align: center
 
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cavity-mesh/computed.png
-	:width: 500pt
+	:alt: outputValues
+	:width: 500
 	:align: center
 
 The computed values of the variables indicated in the above figure are:
@@ -369,12 +387,20 @@ mesh-convergence
 mesh-flowControl
 -----------------
 
+.. image:: https://media.giphy.com/media/o5oLImoQgGsKY/giphy.gif
+	:alt: triki
+	:width: 200
+	:align: center
+
 ----------------------------------------------------------------
 
 diffuser-mesh
 ==============
 
-|triki|
+.. image:: https://media.giphy.com/media/o5oLImoQgGsKY/giphy.gif
+	:alt: triki
+	:width: 200
+	:align: center
 
 ----------------------------------------------------------------
 
@@ -393,10 +419,17 @@ joukowskyMesh
 str_uns
 --------
 
+.. image:: https://media.giphy.com/media/o5oLImoQgGsKY/giphy.gif
+	:alt: triki
+	:width: 200
+	:align: center
+
 ----------------------------------------------------------------
 
 openFoam-case
 ==============
+
+.. image:: https://media.giphy.com/media/o5oLImoQgGsKY/giphy.gif
 
 ----------------------------------------------------------------
 
@@ -415,14 +448,16 @@ comparisonData
 figures
 --------
 
+.. image:: https://media.giphy.com/media/o5oLImoQgGsKY/giphy.gif
+
 ----------------------------------------------------------------
 
 vortex-generation (temporal math LaTeX testing zone)
 =====================================================
 
-:math:`A_\text{c} = (\pi/4) d^2`.
-
-|mathTest|
+.. image:: https://latex.codecogs.com/png.latex?%5Cdpi%7B300%7D%20%5Cbg_white%20%5Cprod_%7Bi%3D1%7D%5E%7BN%7D%20f_i%28x%29%3D%5Cdfrac%7B%5Cint_%7Ba%7D%5E%7Bb%7D%20f%28x%29%7D%7Bk%7D
+   :align: center
+   :width: 100
 
 ***********
 REFERENCES
