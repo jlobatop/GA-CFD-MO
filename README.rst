@@ -293,11 +293,19 @@ The `Joukowsky transform <https://en.wikipedia.org/wiki/Joukowsky_transform>`_ h
 
 whereas the transformation with *fixed radius* give two possible airfoils:
 
-.. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/airfoil-parametrization/joukowsky/fixedR.png
-	:scale: 50
-	:align: center
+.. raw:: html
 
-These codes have also been coded to be interactive, having sliders to change the center (and the radius when it is variable). The two ``.py`` files are interactive figures with sliders and to run them just execute ``python *.py``.
+	<p style="text-align:center;"><img src="https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/airfoil-parametrization/joukowsky/fixedR.png" height="100px" alt="fixedRadius">
+ 
+
+and not centered image test
+
+.. raw:: html
+
+	<img src="https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/airfoil-parametrization/joukowsky/fixedR.png" height="100px" alt="fixedRadius">
+
+
+These codes have also been coded to be interactive, having sliders to change the center (and the radius when it is variable). The two ``.py`` files are interactive figures with sliders and to run them just execute ``python *.py`` in the terminal.
 
 NACA4
 ------
@@ -353,8 +361,6 @@ The things that are required to be changed before running the optimization to th
 
 There are four working cases in the repository with all required files to complete the optimization. These may serve also as further reference. 
 
-----------------------------------------------------------------
-
 cavity-mesh
 ============
 
@@ -375,9 +381,6 @@ cNy3). Custom gradings for all the other walls are also additional inputs, but i
 The computed values of the variables indicated in the above figure are:
 
 
-
-----------------------------------------------------------------
-
 cylinder-mesh
 ==============
 
@@ -387,22 +390,8 @@ mesh-convergence
 mesh-flowControl
 -----------------
 
-.. image:: https://media.giphy.com/media/o5oLImoQgGsKY/giphy.gif
-	:alt: triki
-	:width: 200
-	:align: center
-
-----------------------------------------------------------------
-
 diffuser-mesh
 ==============
-
-.. image:: https://media.giphy.com/media/o5oLImoQgGsKY/giphy.gif
-	:alt: triki
-	:width: 200
-	:align: center
-
-----------------------------------------------------------------
 
 mesh-generation
 ================
@@ -419,19 +408,8 @@ joukowskyMesh
 str_uns
 --------
 
-.. image:: https://media.giphy.com/media/o5oLImoQgGsKY/giphy.gif
-	:alt: triki
-	:width: 200
-	:align: center
-
-----------------------------------------------------------------
-
 openFoam-case
 ==============
-
-.. image:: https://media.giphy.com/media/o5oLImoQgGsKY/giphy.gif
-
-----------------------------------------------------------------
 
 optimization
 =============
@@ -449,8 +427,6 @@ figures
 --------
 
 .. image:: https://media.giphy.com/media/o5oLImoQgGsKY/giphy.gif
-
-----------------------------------------------------------------
 
 vortex-generation (temporal math LaTeX testing zone)
 =====================================================
