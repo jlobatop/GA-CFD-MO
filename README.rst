@@ -154,7 +154,7 @@ The inlet of a jet engine determines the state of all the other elements of the 
 
 .. raw:: html
 
-	<img src="https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_diffuser/diffuserMesh.png" width="600px" alt="diffuserMesh">
+	<img src="https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cases/NSGA_diffuser/diffuserMesh.png" width="700px" alt="diffuserMesh">
 
 In this case, the results form a Pareto front that separate unfeasible solutions from feasible non-optimal solutions:
 
@@ -274,13 +274,13 @@ The `Joukowsky transform <https://en.wikipedia.org/wiki/Joukowsky_transform>`_ h
 
 .. raw:: html
 
-	<img src="https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/airfoil-parametrization/joukowsky/variableR.png" width="500px" alt="variableRadius">
+	<img src="https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/airfoil-parametrization/joukowsky/variableR.png" width="600px" alt="variableRadius">
 
 whereas the transformation with *fixed radius* give two possible airfoils:
 
 .. raw:: html
 
-	<img src="https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/airfoil-parametrization/joukowsky/fixedR.png" width="500px" alt="fixedRadius">
+	<img src="https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/airfoil-parametrization/joukowsky/fixedR.png" width="600px" alt="fixedRadius">
  
 These codes have also been coded to be interactive, having sliders to change the center (and the radius when it is variable). The two ``.py`` files are interactive figures with sliders and to run them just execute ``python *.py`` in the terminal.
 
@@ -390,9 +390,9 @@ mesh-flowControl
 diffuser-mesh
 ==============
 
-.. raw:: html
-
-	<img src="https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/diffuser-mesh/diffuserMesh.png" width="600px" alt="diffuserMeshParaFoam">
+.. image:: ttps://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/diffuser-mesh/diffuserMesh.png
+	:alt: diffuserMeshParaFoam
+	:align: center
 
 mesh-generation
 ================
@@ -493,10 +493,6 @@ vortex-generation (temporal math LaTeX testing zone)
 =====================================================
 
 Analysis of vortex + BC definitions
-
-.. image:: https://latex.codecogs.com/png.latex?%5Cdpi%7B300%7D%20%5Cbg_white%20%5Cprod_%7Bi%3D1%7D%5E%7BN%7D%20f_i%28x%29%3D%5Cdfrac%7B%5Cint_%7Ba%7D%5E%7Bb%7D%20f%28x%29%7D%7Bk%7D
-   :align: center
-   :height: 14
 
 ***********
 REFERENCES
