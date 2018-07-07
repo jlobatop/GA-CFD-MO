@@ -12,31 +12,31 @@ Genetic algorithms applied in Computer Fluid Dynamics for multiobjective optimiz
 
 .. |divisions| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Csmall%20%5Cbegin%7Bmatrix%7D%20fCy1%3DcCy3%5Ccdot%20%5Cdfrac%7BcH%7D%7Bf%7D%20%5Clongrightarrow%20fCy2%3D1-fCy1%20%5C%5C%20%5C%5C%20fCx2%3DcCx1%5Ccdot%5Cdfrac%7BcL%7D%7BbC%7D%20%5Clongrightarrow%20fCx1%3D1-fCx2%20%5C%5C%20%5C%5C%20fCx3%3DcCx3%5Ccdot%5Cdfrac%7BcL%7D%7BaC%7D%20%5Clongrightarrow%20fCx4%3D1-fCx3%20%5Cend%7Bmatrix%7D
 	:alt: divisions
-	:align: center
+	:align: middle
 
 .. |NCH| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Csmall%20%5Cleft.%5Cbegin%7Bmatrix%7D%20%5Ctext%7Bhorizontal%3A%20%7D%5Cdfrac%7BcCx2%5Ccdot%20cL%7D%7BcNx2%5Ccdot%20N%7D%20%5C%5C%20%5C%5C%20%5Ctext%7Bvertical%3A%20%7D%5Cdfrac%7BcCy2%5Ccdot%20cH%7D%7BcNy2%5Ccdot%20NCH%7D%20%5Cend%7Bmatrix%7D%5Cright%5C%7D%20%5Crightarrow%20NCH%3D%20%5Cdfrac%7BcNx2%20%5Ccdot%20cCy2%5Ccdot%20cH%7D%7BcNy2%5Ccdot%20cCx2%5Ccdot%20cL%7D%5Ccdot%20N
 	:alt: cellsCavityHeight
-	:align: center
+	:align: middle
 
 .. |NF| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Csmall%20%5Cbegin%7Bmatrix%7D%20%5Cleft.%5Cbegin%7Bmatrix%7D%20%5Ctext%7Bhorizontal%3A%20%7D%5Cdfrac%7BcCx2%5Ccdot%20cL%7D%7BcNx2%5Ccdot%20N%7D%20%5C%5C%20%5C%5C%20%5Ctext%7Bvertical%3A%20%7D%5Cdfrac%7BfCy2%5Ccdot%20f%7D%7BfNy2%5Ccdot%20NF%7D%20%5Cxrightarrow%5BfNy1%20%3D%20cNy3%5Ccdot%20%5Cfrac%7BNCH%7D%7BNF%7D%5D%7BfNy2%5Ccdot%20NF%20%3D%20%281-fNy1%29%5Ccdot%20NF%7D%20%5Cdfrac%7Bfy2%5Ccdot%20f%7D%7BNF-%20cNy3%20%5Ccdot%20NCH%7D%20%5Cend%7Bmatrix%7D%5Cright%5C%7D%20%5Crightarrow%20%5C%5C%20%5C%5C%20%5Crightarrow%20NF%3D%20%5Cdfrac%7BfCy2%20%5Ccdot%20f%20%5Ccdot%20cNx2%7D%7BcCx2%5Ccdot%20cL%7D%5Ccdot%20N%20&plus;%20cNy3%5Ccdot%20NCH%20%5Cend%7Bmatrix%7D
 	:alt: cellsFreestream
-	:align: center
+	:align: middle
 
 .. |NBC| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Csmall%20%5Cbegin%7Bmatrix%7D%20%5Cleft.%5Cbegin%7Bmatrix%7D%20%5Ctext%7Bhorizontal%3A%20%7D%5Cdfrac%7BfCx1%5Ccdot%20bC%7D%7BfNx1%5Ccdot%20NBC%7D%20%5Cxrightarrow%5BfNx2%3DcNx2%5Ccdot%20%5Cfrac%7BN%7D%7BNBC%7D%5D%7BfNx1%5Ccdot%20NBC%3D%281-fNx2%29%5Ccdot%20NBC%7D%20%5Cdfrac%7BfCx1%5Ccdot%20bC%7D%7BNBC-cNx2%5Ccdot%20N%7D%20%5C%5C%20%5C%5C%20%5Ctext%7Bvertical%3A%20%7D%5Cdfrac%7BfCy2%5Ccdot%20f%7D%7BfNy2%5Ccdot%20NF%7D%20%5Cxrightarrow%5B%5D%7B%5Ctext%7Bby%20definition%7D%7D%20%5Cdfrac%7BcCx2%5Ccdot%20cL%7D%7BcNx2%5Ccdot%20N%7D%20%5Cend%7Bmatrix%7D%5Cright%5C%7D%20%5Crightarrow%20%5C%5C%20%5C%5C%20%5Crightarrow%20NBC%3D%20%5Cdfrac%7BfCx1%20%5Ccdot%20bC%20%5Ccdot%20cNx2%7D%7BcCx2%5Ccdot%20cL%7D%5Ccdot%20N%20&plus;%20cNx2%5Ccdot%20N%20%5Cend%7Bmatrix%7D
 	:alt: cellsBeforeCavity
-	:align: center
+	:align: middle
 
 .. |NAC| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Csmall%20%5Cbegin%7Bmatrix%7D%20%5Cleft.%5Cbegin%7Bmatrix%7D%20%5Ctext%7Bhorizontal%3A%20%7D%5Cdfrac%7BfCx4%5Ccdot%20aC%7D%7BfNx4%5Ccdot%20NAC%7D%20%5Cxrightarrow%5BfNx3%3DcNx3%5Ccdot%20%5Cfrac%7BN%7D%7BNAC%7D%5D%7BfNx4%5Ccdot%20NAC%3D%281-fNx3%29%5Ccdot%20NAC%7D%20%5Cdfrac%7BfCx4%5Ccdot%20aC%7D%7BNAC-cNx3%5Ccdot%20N%7D%20%5C%5C%20%5C%5C%20%5Ctext%7Bvertical%3A%20%7D%5Cdfrac%7BfCy2%5Ccdot%20f%7D%7BfNy2%5Ccdot%20NF%7D%20%5Cxrightarrow%5B%5D%7B%5Ctext%7Bby%20definition%7D%7D%20%5Cdfrac%7BcCx2%5Ccdot%20cL%7D%7BcNx2%5Ccdot%20N%7D%20%5Cend%7Bmatrix%7D%5Cright%5C%7D%20%5Crightarrow%20%5C%5C%20%5C%5C%20%5Crightarrow%20NAC%3D%20%5Cdfrac%7BfCx4%20%5Ccdot%20aC%20%5Ccdot%20cNx2%7D%7BcCx2%5Ccdot%20cL%7D%5Ccdot%20N%20&plus;%20cNx3%5Ccdot%20N%20%5Cend%7Bmatrix%7D
 	:alt: cellsAfterCavity
-	:align: center
+	:align: middle
 
 .. |cellsDivision| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Csmall%20%5Cbegin%7Bmatrix%7D%20fNx2%3DcNx1%5Ccdot%5Cdfrac%7BN%7D%7BNBC%7D%20%5Clongrightarrow%20fNx1%3D1-fNx2%20%5C%5C%20%5C%5C%20fNx3%3DcNx3%5Ccdot%5Cdfrac%7BN%7D%7BNAC%7D%20%5Clongrightarrow%20fNx4%3D1-fNx3%20%5C%5C%20%5C%5C%20fNy1%3DcNy3%5Ccdot%20%5Cdfrac%7BNCH%7D%7BNF%7D%20%5Clongrightarrow%20fNy2%3D1-fNy1%20%5C%5C%20%5Cend%7Bmatrix%7D
 	:alt: cellsDivision
-	:align: center
+	:align: middle
 
 .. |gradings| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Cbg_white%20%5Csmall%20g_%7B11%7D%3Dg_%7B13%7D%3D%5Cdfrac%7B1%7D%7Bg_%7B12%7D%7D%20%5Cqquad%20%5Cqquad%20g_%7B14%7D%3Dg_%7B12%7D%20%5Cqquad%20%5Cqquad%20g_%7B22%7D%20%3D%20%5Cdfrac%7B1%7D%7Bg_%7B21%7D%7D%20%5Cqquad%20%5Cqquad%20g_%7B23%7D%3Dg_%7B21%7D
 	:alt: gradings
-	:align: center
+	:align: middle
 
 This is a Senior Thesis developed for the BSc Aerospace Engineering at the University of Leon. However, this project was done at the University of Vermont during an exchange program. The main purpose of this thesis was to couple a metaheuristic optimization method, such as genetic algorithm (GA), with aerospace cases simulated with computer fluid dynamics (CFD) that have multiple objectives (MO).
 
@@ -390,29 +390,17 @@ First of all, the dimensions x1, x2, x3, y1 and y2 are computed with the specifi
 
 Number of cells for each dimension are computed so the greatest part of all blocks are squared cells with aspect ratio 1:1. To make that, the distance in the horizontal and vertical dimension of every cell are equaled and solved to get the number of cells in each direction. Keep in mind that total length times the length percentage divided by the total number of cells and by the percentage of cells will give the size of the cell.
 
-- Cavity cell to obtain cells in the cavity height:
+- Cavity cell to obtain cells in the cavity height: |NCH|
 
-|NCH|
+- Freestream right-above-the-cavity cell to determine number of cells in the freestream: |NF|
 
-- Freestream right-above-the-cavity cell to determine number of cells in the freestream:
+- Freestream before-the-cavity cell to obtain cells in the horizontal before-the-cavity length: |NBC|
 
-|NF|
+- Freestream after-the-cavity cell to obtain cells in the horizontal after-the-cavity length: |NAC|
 
-- Freestream before-the-cavity cell to obtain cells in the horizontal before-the-cavity length:
+All the number of cell computations were rounded to the nearest integer to avoid decimal number of cells. Once the number of cells of each block has been computed, it is important to assign the percentage of cells for each block subdivision: |cellsDivision|
 
-|NBC|
-
-- Freestream after-the-cavity cell to obtain cells in the horizontal after-the-cavity length:
-
-|NAC|
-
-All the number of cell computations were rounded to the nearest integer to avoid decimal number of cells. Once the number of cells of each block has been computed, it is important to assign the percentage of cells for each block subdivision:
-
-|cellsDivision|
-
-Finally, the different boundary layer inflations are computed by:
-
-|gradings|
+Finally, the different boundary layer inflations are computed by: |gradings|
 
 unless otherwise specified.
 
