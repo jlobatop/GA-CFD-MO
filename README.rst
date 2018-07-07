@@ -7,7 +7,36 @@ Genetic algorithms applied in Computer Fluid Dynamics for multiobjective optimiz
    :align: middle
 
 .. |Rfmuxmuy| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Cbg_white%20%5Csmall%20R%3Df%28%5Cmu_x%2C%5Cmu_y%29
+   :alt: Rfmuxmuy
    :align: middle
+
+.. |divisions| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Csmall%20%5Cbegin%7Bmatrix%7D%20fCy1%3DcCy3%5Ccdot%20%5Cdfrac%7BcH%7D%7Bf%7D%20%5Clongrightarrow%20fCy2%3D1-fCy1%20%5C%5C%20%5C%5C%20fCx2%3DcCx1%5Ccdot%5Cdfrac%7BcL%7D%7BbC%7D%20%5Clongrightarrow%20fCx1%3D1-fCx2%20%5C%5C%20%5C%5C%20fCx3%3DcCx3%5Ccdot%5Cdfrac%7BcL%7D%7BaC%7D%20%5Clongrightarrow%20fCx4%3D1-fCx3%20%5Cend%7Bmatrix%7D
+	:alt: divisions
+	:align: center
+
+.. |NCH| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Csmall%20%5Cleft.%5Cbegin%7Bmatrix%7D%20%5Ctext%7Bhorizontal%3A%20%7D%5Cdfrac%7BcCx2%5Ccdot%20cL%7D%7BcNx2%5Ccdot%20N%7D%20%5C%5C%20%5C%5C%20%5Ctext%7Bvertical%3A%20%7D%5Cdfrac%7BcCy2%5Ccdot%20cH%7D%7BcNy2%5Ccdot%20NCH%7D%20%5Cend%7Bmatrix%7D%5Cright%5C%7D%20%5Crightarrow%20NCH%3D%20%5Cdfrac%7BcNx2%20%5Ccdot%20cCy2%5Ccdot%20cH%7D%7BcNy2%5Ccdot%20cCx2%5Ccdot%20cL%7D%5Ccdot%20N
+	:alt: cellsCavityHeight
+	:align: center
+
+.. |NF| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Csmall%20%5Cbegin%7Bmatrix%7D%20%5Cleft.%5Cbegin%7Bmatrix%7D%20%5Ctext%7Bhorizontal%3A%20%7D%5Cdfrac%7BcCx2%5Ccdot%20cL%7D%7BcNx2%5Ccdot%20N%7D%20%5C%5C%20%5C%5C%20%5Ctext%7Bvertical%3A%20%7D%5Cdfrac%7BfCy2%5Ccdot%20f%7D%7BfNy2%5Ccdot%20NF%7D%20%5Cxrightarrow%5BfNy1%20%3D%20cNy3%5Ccdot%20%5Cfrac%7BNCH%7D%7BNF%7D%5D%7BfNy2%5Ccdot%20NF%20%3D%20%281-fNy1%29%5Ccdot%20NF%7D%20%5Cdfrac%7Bfy2%5Ccdot%20f%7D%7BNF-%20cNy3%20%5Ccdot%20NCH%7D%20%5Cend%7Bmatrix%7D%5Cright%5C%7D%20%5Crightarrow%20%5C%5C%20%5C%5C%20%5Crightarrow%20NF%3D%20%5Cdfrac%7BfCy2%20%5Ccdot%20f%20%5Ccdot%20cNx2%7D%7BcCx2%5Ccdot%20cL%7D%5Ccdot%20N%20&plus;%20cNy3%5Ccdot%20NCH%20%5Cend%7Bmatrix%7D
+	:alt: cellsFreestream
+	:align: center
+
+.. |NBC| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Csmall%20%5Cbegin%7Bmatrix%7D%20%5Cleft.%5Cbegin%7Bmatrix%7D%20%5Ctext%7Bhorizontal%3A%20%7D%5Cdfrac%7BfCx1%5Ccdot%20bC%7D%7BfNx1%5Ccdot%20NBC%7D%20%5Cxrightarrow%5BfNx2%3DcNx2%5Ccdot%20%5Cfrac%7BN%7D%7BNBC%7D%5D%7BfNx1%5Ccdot%20NBC%3D%281-fNx2%29%5Ccdot%20NBC%7D%20%5Cdfrac%7BfCx1%5Ccdot%20bC%7D%7BNBC-cNx2%5Ccdot%20N%7D%20%5C%5C%20%5C%5C%20%5Ctext%7Bvertical%3A%20%7D%5Cdfrac%7BfCy2%5Ccdot%20f%7D%7BfNy2%5Ccdot%20NF%7D%20%5Cxrightarrow%5B%5D%7B%5Ctext%7Bby%20definition%7D%7D%20%5Cdfrac%7BcCx2%5Ccdot%20cL%7D%7BcNx2%5Ccdot%20N%7D%20%5Cend%7Bmatrix%7D%5Cright%5C%7D%20%5Crightarrow%20%5C%5C%20%5C%5C%20%5Crightarrow%20NBC%3D%20%5Cdfrac%7BfCx1%20%5Ccdot%20bC%20%5Ccdot%20cNx2%7D%7BcCx2%5Ccdot%20cL%7D%5Ccdot%20N%20&plus;%20cNx2%5Ccdot%20N%20%5Cend%7Bmatrix%7D
+	:alt: cellsBeforeCavity
+	:align: center
+
+.. |NAC| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Csmall%20%5Cbegin%7Bmatrix%7D%20%5Cleft.%5Cbegin%7Bmatrix%7D%20%5Ctext%7Bhorizontal%3A%20%7D%5Cdfrac%7BfCx4%5Ccdot%20aC%7D%7BfNx4%5Ccdot%20NAC%7D%20%5Cxrightarrow%5BfNx3%3DcNx3%5Ccdot%20%5Cfrac%7BN%7D%7BNAC%7D%5D%7BfNx4%5Ccdot%20NAC%3D%281-fNx3%29%5Ccdot%20NAC%7D%20%5Cdfrac%7BfCx4%5Ccdot%20aC%7D%7BNAC-cNx3%5Ccdot%20N%7D%20%5C%5C%20%5C%5C%20%5Ctext%7Bvertical%3A%20%7D%5Cdfrac%7BfCy2%5Ccdot%20f%7D%7BfNy2%5Ccdot%20NF%7D%20%5Cxrightarrow%5B%5D%7B%5Ctext%7Bby%20definition%7D%7D%20%5Cdfrac%7BcCx2%5Ccdot%20cL%7D%7BcNx2%5Ccdot%20N%7D%20%5Cend%7Bmatrix%7D%5Cright%5C%7D%20%5Crightarrow%20%5C%5C%20%5C%5C%20%5Crightarrow%20NAC%3D%20%5Cdfrac%7BfCx4%20%5Ccdot%20aC%20%5Ccdot%20cNx2%7D%7BcCx2%5Ccdot%20cL%7D%5Ccdot%20N%20&plus;%20cNx3%5Ccdot%20N%20%5Cend%7Bmatrix%7D
+	:alt: cellsAfterCavity
+	:align: center
+
+.. |cellsDivision| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Csmall%20%5Cbegin%7Bmatrix%7D%20fNx2%3DcNx1%5Ccdot%5Cdfrac%7BN%7D%7BNBC%7D%20%5Clongrightarrow%20fNx1%3D1-fNx2%20%5C%5C%20%5C%5C%20fNx3%3DcNx3%5Ccdot%5Cdfrac%7BN%7D%7BNAC%7D%20%5Clongrightarrow%20fNx4%3D1-fNx3%20%5C%5C%20%5C%5C%20fNy1%3DcNy3%5Ccdot%20%5Cdfrac%7BNCH%7D%7BNF%7D%20%5Clongrightarrow%20fNy2%3D1-fNy1%20%5C%5C%20%5Cend%7Bmatrix%7D
+	:alt: cellsDivision
+	:align: center
+
+.. |gradings| image:: https://latex.codecogs.com/svg.latex?%5Cdpi%7B100%7D%20%5Cbg_white%20%5Csmall%20g_%7B11%7D%3Dg_%7B13%7D%3D%5Cdfrac%7B1%7D%7Bg_%7B12%7D%7D%20%5Cqquad%20%5Cqquad%20g_%7B14%7D%3Dg_%7B12%7D%20%5Cqquad%20%5Cqquad%20g_%7B22%7D%20%3D%20%5Cdfrac%7B1%7D%7Bg_%7B21%7D%7D%20%5Cqquad%20%5Cqquad%20g_%7B23%7D%3Dg_%7B21%7D
+	:alt: gradings
+	:align: center
 
 This is a Senior Thesis developed for the BSc Aerospace Engineering at the University of Leon. However, this project was done at the University of Vermont during an exchange program. The main purpose of this thesis was to couple a metaheuristic optimization method, such as genetic algorithm (GA), with aerospace cases simulated with computer fluid dynamics (CFD) that have multiple objectives (MO).
 
@@ -240,7 +269,7 @@ However the results in this case are way different from the ones before. These h
 Conclusions
 ============
 
-The main objective of the project of coupling genetic algorithms with computer fluid dynamics cases has been fulfilled. The created scripts have been used for three different cases, proving that GA are a good approach to CFD but only for 2D simple cases, given that each one of the optimization process took ~15 hours and created roughly 50 Gb of data. Further developments should aim towards a higher convergence of the Pareto front to reduce both computational time and space, so this method can be used for more complex cases or even 3D meshes. 
+The main objective of the project of coupling genetic algorithms with computer fluid dynamics cases has been fulfilled. The created scripts have been used for three different cases, proving that GA are a good approach to CFD but (at this thesis moment) only for 2D simple cases, given that each one of the optimization process took ~15 hours and created roughly 50 Gb of data. Further developments should aim towards a higher convergence of the Pareto front to reduce both computational time and used space, so this method can be used for more complex cases or even 3D meshes. 
 
 *****************
 FOLDER BY FOLDER
@@ -341,11 +370,9 @@ There are four working cases in the repository with all required files to comple
 cavity-mesh
 ============
 
-Mesh generator of a cavity inside a freestream flow with a high level of customization but keeping in mind one objective: maintain the aspect ratio with a value of 1 in the vast majority of the cells that are far from the boundary layer. Basic inputs are the dimensions of the case, having three horizontal dimensions (freestream *before the cavity*, *horizontal length of the cavity*, freestream *after the cavity*) and two vertical ones (*cavity height* and *freestream* height), number of horizontal cells in the cavity and grading (boundary layer expansion ratio factor) of the most-left wall and lower wall of the cavity.  There are additional inputs to the case that may also be varied: z-direction components (z1 and z2) and percentage of the chord and cells for the cavity block (cCx1, cCx2, cCx3, cCy1, cCy2, cCy3, cNx1, cNx2, cNx3, cNy1, cNy2, 
-cNy3). Custom gradings for all the other walls are also additional inputs, but if not specified they will be computed automatically depending on the ones fixed for the other directions. 
+Mesh generator of a cavity inside a freestream flow with a high level of customization but keeping in mind one objective: maintain the aspect ratio with a value of 1 in the vast majority of the cells that are far from the boundary layer. Basic inputs are the dimensions of the case, having three horizontal dimensions (freestream *beforeCavity* **bC**, horizontal *cavityLength* **cL**, freestream *afterCavity* **aC**) and two vertical ones (*cavityHeight* **cH** and *freestream* height **f**), number of horizontal cells in the cavity (*N*) and grading (boundary layer expansion ratio factor) of the most-left wall and lower wall of the cavity (*g12* and *g21*).  There are additional inputs to the case that may also be varied: z-direction components (z1 and z2) and percentage of the chord and cells for each percentage in the cavity block (cCx1, cCx2, cCx3, cCy1, cCy2, cCy3, cNx1, cNx2, cNx3, cNy1, cNy2, cNy3). Custom gradings for all the other walls are also additional inputs, but if not specified they will be computed automatically depending on the ones fixed for the other directions. 
 
-
-The inputs are shown in the next figure:
+The inputs are shown in the next figure, having red for the mandatory inputs, blue for the additional ones and black for the ones that will be computed (unless otherwise specified):
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cavity-mesh/input.png
 	:alt: inputValues
@@ -357,16 +384,45 @@ The computed values are sketched in the figure below:
 	:alt: outputValues
 	:align: center
 
-The variables indicated in the previous figure are computed as:
+First of all, the dimensions x1, x2, x3, y1 and y2 are computed with the specified individual dimensions. There are some values in the previous sketch that are straightforward to compute, having that the different divisions of each block are computed by:
 
+|divisions|
 
+Number of cells for each dimension are computed so the greatest part of all blocks are squared cells with aspect ratio 1:1. To make that, the distance in the horizontal and vertical dimension of every cell are equaled and solved to get the number of cells in each direction. Keep in mind that total length times the length percentage divided by the total number of cells and by the percentage of cells will give the size of the cell.
 
+- Cavity cell to obtain cells in the cavity height:
+
+|NCH|
+
+- Freestream right-above-the-cavity cell to determine number of cells in the freestream:
+
+|NF|
+
+- Freestream before-the-cavity cell to obtain cells in the horizontal before-the-cavity length:
+
+|NBC|
+
+- Freestream after-the-cavity cell to obtain cells in the horizontal after-the-cavity length:
+
+|NAC|
+
+All the number of cell computations were rounded to the nearest integer to avoid decimal number of cells. Once the number of cells of each block has been computed, it is important to assign the percentage of cells for each block subdivision:
+
+|cellsDivision|
+
+Finally, the different boundary layer inflations are computed by:
+
+|gradings|
+
+unless otherwise specified.
 
 It can be seen in the next figure how a cavity mesh is obtained from some values It is worth noticing that the freestream and a considerable section of the cavity is made of squared cells:
 
 .. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/cavity-mesh/cavity_mesh.png
 	:alt: cavityMesh
 	:align: center
+
+This folder is in this repository because cavity vortex shedding was an idea which seemed also interesting to control with genetic algorithms. However, time did not let its implementation.
 
 cylinder-mesh
 ==============
@@ -400,23 +456,25 @@ mesh-generation
 extMesh
 --------
 
-.. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/mesh-generation/2412.png
-	:alt: externalFlowMesh
-	:align: center
+.. raw:: html
+
+	<img src="https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/mesh-generation/2412.png" width="600px" alt="externalFlowMesh">
 
 int
 ----
 
-.. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/mesh-generation/int2412.png
-	:alt: internalFlowMesh
-	:align: center
+.. raw:: html
+
+	<img src="https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/mesh-generation/int2412.png" width="600px" alt="internalFlowMesh">
+
 
 joukowskyMesh
 --------------
 
-.. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/mesh-generation/joukowskyAirfoil.png
-	:alt: jouwkoskyMesh
-	:align: center
+.. raw:: html
+
+	<img src="https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/mesh-generation/joukowskyAirfoil.png" width="600px" alt="joukowskyMesh">
+
 
 str_uns
 --------
