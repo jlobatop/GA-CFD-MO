@@ -370,7 +370,7 @@ There are four working cases in the repository with all required files to comple
 cavity-mesh
 ============
 
-Mesh generator of a cavity inside a freestream flow with a high level of customization but keeping in mind one objective: maintain the aspect ratio with a value of 1 in the vast majority of the cells that are far from the boundary layer. Basic inputs are the dimensions of the case, having three horizontal dimensions (freestream *beforeCavity* **bC**, horizontal *cavityLength* **cL**, freestream *afterCavity* **aC**) and two vertical ones (*cavityHeight* **cH** and *freestream* height **f**), number of horizontal cells in the cavity (*N*) and grading (boundary layer expansion ratio factor) of the most-left wall and lower wall of the cavity (*g12* and *g21*).  There are additional inputs to the case that may also be varied: z-direction components (z1 and z2) and percentage of the chord and cells for each percentage in the cavity block (cCx1, cCx2, cCx3, cCy1, cCy2, cCy3, cNx1, cNx2, cNx3, cNy1, cNy2, cNy3). Custom gradings for all the other walls are also additional inputs, but if not specified they will be computed automatically depending on the ones fixed for the other directions. 
+Mesh generator of a cavity inside a freestream flow with a high level of customization but keeping in mind one objective: maintain the aspect ratio with a value of 1 in the vast majority of the cells that are far from the boundary layer. Basic inputs are the dimensions of the case, having three horizontal dimensions (freestream *beforeCavity* -**bC**-, horizontal *cavityLength* -**cL**-, freestream *afterCavity* -**aC**-) and two vertical ones (*cavityHeight* -**cH**- and *freestream* height -**f**-), number of horizontal cells in the cavity (*N*) and grading (boundary layer expansion ratio factor) of the most-left wall and lower wall of the cavity (*g12* and *g21*).  There are additional inputs to the case that may also be varied: z-direction components (*z1* and *z2*) and percentage of the chord and cells for each percentage in the cavity block (*cCx1*, *cCx2*, *cCx3*, *cCy1*, *cCy2*, *cCy3*, *cNx1*, *cNx2*, *cNx3*, *cNy1*, *cNy2*, *cNy3*). Custom gradings for all the other walls are also additional inputs, but if not specified they will be computed automatically depending on the ones fixed for the other directions. 
 
 The inputs are shown in the next figure, having red for the mandatory inputs, blue for the additional ones and black for the ones that will be computed (unless otherwise specified):
 
@@ -390,7 +390,7 @@ First of all, the dimensions x1, x2, x3, y1 and y2 are computed with the specifi
 
 Number of cells for each dimension are computed so the greatest part of all blocks are squared cells with aspect ratio 1:1. To make that, the distance in the horizontal and vertical dimension of every cell are equaled and solved to get the number of cells in each direction. Keep in mind that total length times the length percentage divided by the total number of cells and by the percentage of cells will give the size of the cell.
 
-- Cavity cell to obtain cells in the cavity height: |NCH|
+- Solving for a cavity cell dimensions to obtain the number of cells in the cavity height: |NCH|
 
 - Freestream right-above-the-cavity cell to determine number of cells in the freestream: |NF|
 
@@ -410,16 +410,22 @@ It can be seen in the next figure how a cavity mesh is obtained from some values
 	:alt: cavityMesh
 	:align: center
 
-This folder is in this repository because cavity vortex shedding was an idea which seemed also interesting to control with genetic algorithms. However, time did not let its implementation.
+This folder is in this repository because cavity vortex shedding was another case which seemed interesting to control with genetic algorithms. However, the implementation was not possible due to time cconstraints.
 
 cylinder-mesh
 ==============
 
+The first thing to notice in this folder is a ``mp4`` video that shows forced vortex shedding with a boundary condition perturbation. Pressure and velocity_magnitude are represented in the left view while the white line values are represented in the right plot. Moreover, there are two folders that will be described now. 
+
 mesh-convergence
 -----------------
 
+In the process of do a mesh convergence, different mesh refinements were tried. However, and given the lack of validation values, it was a little hard to perform mesh convergence, because as it can be seen in the third column of `cylinderMeshConv <https://github.com/jlobatop/GA-CFD-MO/blob/master/cylinder-mesh/mesh-convergence/cylinderMeshConv.png>`_, the most refined the case, the stronger the vortex (which is obviously related to the cell size). The different meshes are also stored in the `cases <https://github.com/jlobatop/GA-CFD-MO/tree/master/cylinder-mesh/mesh-convergence/cases>`_ folder, the extracted data after the simulation of the mesh is stored in the `data <https://github.com/jlobatop/GA-CFD-MO/tree/master/cylinder-mesh/mesh-convergence/data>`_ folder and it is analyzed with the notebook in the root of this folder. 
+
 mesh-flowControl
 -----------------
+
+After mesh convergence, three meshes were created with different combinations of the location of the membrane, having a rear position (first column is a coarse mesh and the center column is a finer one) and a position right in the flow detachement point (third column) where membranes are usually located:
 
 .. raw:: html
 
@@ -431,15 +437,38 @@ mesh-flowControl
 		</tr>
 	</table>
 
+Further developments should locate the flow inlet-outlet in a custom angle with a redefined mesh (these ones are too constrained and no modifications are possible).
+
 diffuser-mesh
 ==============
 
-.. image:: ttps://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/diffuser-mesh/diffuserMesh.png
+The mesh for the diffuser case is created with a Python script executed as  ``python3 blockMeshGenerator.py L theta folderNum``. This will create a ready-to-simulation folder (copy of the `baseCase <https://github.com/jlobatop/GA-CFD-MO/tree/master/diffuser-mesh/baseCase>`_ folder) with a mesh with the desired parameters for the length and angles of the inlet. 
+
+.. image:: https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/diffuser-mesh/diffuserMesh.png
 	:alt: diffuserMeshParaFoam
 	:align: center
 
+In this folder is also included the constrained search space for this case. There are 4 different constraints:
+
+- Blue line: there is a geometrical constraint given that the angle cannot be as large as the 0.8 meter distance of the diffuser exit length (measured from the axis). Therefore, for each length, there is a maximum possible angle where the inlet of the diffuser mets the cowl of the engine. 
+
+- Red line: as before, there is a lower bound for the angle, given that minimum increase in ''height'' from the axis is 0.1 meters. Again, for each length there is an angle where the inlet of the diffuser will be tangent to the outlet of the diffuser (having a diffuser with parallel surfaces). 
+
+- Green line: is a geometrical constraint that refers to a maximum length of the diffuser, i.e., it limits the diffuser length to avoid inlets of more than 2.5 meters (which already is a long enough case).
+
+- Black line: this is the physical constraint to the angle variable, given that attached oblique shockwaves (which are more stable than the detached ones) behave according to the ``theta-beta-Mach`` equation (from compressible flow theory) and there is an upper limit in the angle that a shock wave may suffer before dettaching it from the leading edge of the step that it encounters.
+
+These constrains are coded up in the notebook, obtaining a space with the next shape shape:
+
+.. raw:: html
+
+	<img src="https://raw.githubusercontent.com/jlobatop/GA-CFD-MO/master/docs/diffuser-mesh/SearchSpace.png" width="600px" alt="diffuserMeshConstraints">
+
+
 mesh-generation
 ================
+
+In this folder there
 
 extMesh
 --------
@@ -535,8 +564,8 @@ comparisonData
 figures
 --------
 
-vortex-generation (temporal math LaTeX testing zone)
-=====================================================
+vortex-generation 
+==================
 
 Analysis of vortex + BC definitions
 
